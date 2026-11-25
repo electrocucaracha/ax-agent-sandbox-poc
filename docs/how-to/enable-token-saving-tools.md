@@ -3,6 +3,16 @@
 Turn on rtk, Headroom, Engram or Graphify for a sandboxed OpenCode task.
 For measured results, see [Token-saving findings](../explanation/token-saving-findings.md).
 
+To collect repeatable baseline/tool usage with the credentials in `.env.opencode`:
+
+```bash
+python3 scripts/11-token-benchmark.py --repetitions 3 --output /tmp/token-benchmark.json
+```
+
+Add `--headroom` when the deployed proxy points to the same upstream.
+The [benchmark method](../explanation/token-saving-findings.md#paired-benchmark-2026-11-25)
+describes prerequisites, accuracy checks, and what these measurements do not establish.
+
 Every tool must be installed in the image, because the sandbox cannot reach package registries.
 The image has one config, `/opt/opencode.anthropic.json`, and one instruction file, `image/AGENTS.md`.
 The config loads `AGENTS.md` and starts the Engram MCP server.

@@ -4,6 +4,7 @@ metadata:
   name: ${TASK}
   atespace: ${TENANT}
 spec:
+  profile: ${TASK_PROFILE}
   workspace:
     name: ${WS}
   gateway:
@@ -12,13 +13,54 @@ spec:
     - sh
     - -c
     - |
-      mkdir -p $HOME && cd /workspace/repo
+      set -eu
+      mkdir -p "$HOME" && cd /workspace/repo
+      fail_task() {
+        status=$1
+        printf 'agent failed with status %s\n' "$status" > /workspace/failed
+        sleep ${HOLD_SECONDS}
+        exit "$status"
+      }
       {
         if [ "$AGENT_RUNNER" = script ]; then
-          printf %s "$AGENT_PROMPT_B64" | base64 -d > /workspace/run.sh; sh /workspace/run.sh
+          if ! printf %s "$AGENT_PROMPT_B64" | base64 -d > /workspace/run.sh; then fail_task 1; fi
+          sh /workspace/run.sh || fail_task $?
         else
-          printf %s "$AGENT_PROMPT_B64" | base64 -d > /workspace/prompt.md
-          opencode run "Follow the attached instructions." -f /workspace/prompt.md
+          if ! printf %s "$AGENT_PROMPT_B64" | base64 -d > /workspace/prompt.md; then fail_task 1; fi
+          if [ -n "$MODEL_ID" ] || [ -n "$EXTRA_HEADERS_B64" ] || [ "$AUTH_MODE" = x-api-key ]; then
+            python3 - "$OPENCODE_CONFIG" "$MODEL_ID" "$EXTRA_HEADERS_B64" "$AUTH_MODE" <<'PY' || fail_task $?
+      import base64
+      import json
+      import sys
+
+      config_path, model_name, headers_b64, auth_mode = sys.argv[1:]
+      with open(config_path, encoding="utf-8") as config_file:
+          config = json.load(config_file)
+      provider_name, model_key = config["model"].split("/", 1)
+      provider = config["provider"][provider_name]
+      if model_name:
+          provider["models"][model_key]["name"] = model_name
+      headers = provider.setdefault("options", {}).setdefault("headers", {})
+      if not isinstance(headers, dict):
+          raise SystemExit("provider headers must be a JSON object")
+      if headers_b64:
+          extra_headers = json.loads(base64.b64decode(headers_b64, validate=True))
+          if not isinstance(extra_headers, dict) or not all(
+              isinstance(key, str) and isinstance(value, str)
+              for key, value in extra_headers.items()
+          ):
+              raise SystemExit("extra headers must be a JSON object of string values")
+          headers.update(extra_headers)
+      if auth_mode == "x-api-key":
+          for header_name in list(headers):
+              if header_name.lower() == "authorization":
+                  del headers[header_name]
+      with open("/workspace/opencode.runtime.json", "w", encoding="utf-8") as config_file:
+          json.dump(config, config_file)
+      PY
+            export OPENCODE_CONFIG=/workspace/opencode.runtime.json
+          fi
+          opencode run "Follow the attached instructions." -f /workspace/prompt.md || fail_task $?
         fi
       } > /workspace/out.log 2>&1
       touch /workspace/done
@@ -34,4 +76,10 @@ spec:
       value: "https://${LLM_HOST}${LLM_PATH}"
     - name: OPENCODE_CONFIG
       value: "${OC_CONFIG}"
+    - name: MODEL_ID
+      value: "${LLM_MODEL_ID}"
+    - name: EXTRA_HEADERS_B64
+      value: "${EXTRA_HEADERS_B64}"
+    - name: AUTH_MODE
+      value: "${AUTH_MODE}"
   debug: true

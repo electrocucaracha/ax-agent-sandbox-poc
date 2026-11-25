@@ -66,13 +66,14 @@ flowchart TB
 | `/workspace` state survives suspend and resume                        | Verified                                              |
 | OpenCode completes prompts through the injected key                   | Verified                                              |
 | Token-saving tools (rtk, Headroom, Engram, Graphify)                  | Verified to run; savings vary by workload             |
-| Several agents running concurrently on the shared pool                | Verified (11 tasks; the full epic needs a real model) |
+| Several agents running concurrently on the shared pool                | Verified with a real provider; full workflow recovered after a mutation retry |
 | Tenant separation across atespaces (separate keys, credential policy) | Verified (2 atespaces)                                |
 | Long-running sessions on large repositories                           | Not tested                                            |
 | Memory shared across tasks                                            | Not tested                                            |
 
-The multi-agent and multi-tenant rows describe the design this project builds toward.
-The verified rows come from single-task runs.
+The [real-provider team run](docs/how-to/run-team-demo.md#real-provider-recovered-run-2026-11-25)
+completed all stages after a targeted mutation retry, including reviewers and isolation checks.
+It was not a clean unattended run, and the generated epic did not pass its quality gates.
 See [Multi-agent and multi-tenant design](docs/explanation/multi-agent-multitenancy.md) for how the pieces map and what a test needs.
 
 ## Quickstart
@@ -88,25 +89,31 @@ scripts/02-start-cluster.sh        # first start pulls about 570 MB
 scripts/05-mock-llm.sh
 scripts/03-build-push-image.sh
 scripts/09-git-server.sh
-scripts/10-team-demo.sh            # one epic, 10 role agents in 2 waves, delivered as PRs
+scripts/10-team-demo.sh            # one epic: triage, builders, mutation, then reviewers
 scripts/99-teardown.sh
 ```
 
+For the full sequence in one command, use `scripts/main.sh`.
+To skip the local image build, run `IMAGE_SOURCE=external OPENCODE_IMAGE=registry.example/agent@sha256:<digest> scripts/main.sh`
+with a compatible, worker-accessible image; the demo fetches the Click seed repository at tag `8.1.8`
+when `image/sample-repo/` is absent.
+
 The demo shows each agent's output, the placeholder key in the sandbox, and the mock LLM receiving each tenant's own key.
-`scripts/main.sh` runs the same phases in one command.
 For a guided walkthrough, follow the [first-task tutorial](docs/tutorials/first-task.md).
 To use a real model, see [Use a real LLM endpoint](docs/how-to/use-real-llm-endpoint.md).
-To use a local model, see [Run the team demo with Ollama](docs/how-to/run-team-demo-with-ollama.md).
+To use an external Ollama server, see [Run the team demo with Ollama](docs/how-to/run-team-demo-with-ollama.md).
 
 ## Token-saving tools
 
-| Tool                                                          | What it does                        | Measured effect (single run)                                |
+| Tool                                                          | What it does                        | Measured effect                                             |
 | ------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
-| [Graphify](docs/how-to/enable-token-saving-tools.md#graphify) | Code knowledge graph for navigation | About 28% fewer tokens, 58% fewer tool calls                |
-| [Headroom](docs/how-to/enable-token-saving-tools.md#headroom) | Context-compression proxy           | About 2.5% on plain-text output; aimed at JSON and logs     |
-| [rtk](docs/how-to/enable-token-saving-tools.md#rtk)           | Shell output compression            | No saving on the test; capped output caused a rerun         |
+| [Graphify](docs/how-to/enable-token-saving-tools.md#graphify) | Code knowledge graph for navigation | About 28% fewer tokens, 58% fewer tool calls (older single run) |
+| [Headroom](docs/how-to/enable-token-saving-tools.md#headroom) | Context-compression proxy           | 69.4% fewer input tokens on synthetic JSON history         |
+| [rtk](docs/how-to/enable-token-saving-tools.md#rtk)           | Shell output compression            | 93.2% fewer input tokens on verbose pytest; 0% on ten-commit Git log |
 | [Engram](docs/how-to/enable-token-saving-tools.md#engram)     | Persistent memory over MCP          | Recall across sessions works; adds tool-definition overhead |
 
+The rtk and Headroom results are from three paired requests per workload on 2026-11-25;
+all 18 answer checks passed. They measure bounded context compression, not whole-agent savings.
 Savings depend on the workload.
 Read the [findings](docs/explanation/token-saving-findings.md) before you adopt one.
 
@@ -123,7 +130,7 @@ Read the [findings](docs/explanation/token-saving-findings.md) before you adopt 
 
 ```text
 scripts/     numbered setup and run scripts
-resources/   Kubernetes and AX YAML as kustomizations (mock-llm, git-server, ollama, headroom, team, task)
+resources/   Kubernetes and AX YAML as kustomizations (mock-llm, git-server, headroom, team, task)
 agents/      agent definitions: the epic, team rules, one file per role, ci-check
 image/       Dockerfile (one file, all agent tools) and agent configs
 docs/        tutorials, how-to guides, reference, explanation

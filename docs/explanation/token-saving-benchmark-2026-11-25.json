@@ -1,0 +1,276 @@
+{
+  "generated_at": "2026-11-25T19:42:59.232957+00:00",
+  "model": "claude-sonnet-4-6",
+  "repetitions": 3,
+  "versions": {
+    "rtk": "rtk 1.2.1",
+    "pytest": "pytest 9.2.0"
+  },
+  "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+  "architecture": "aarch64",
+  "measurements": [
+    {
+      "workload": "git-log",
+      "variant": "baseline",
+      "repeat": 1,
+      "command_exit_code": 0,
+      "output_bytes": 2575,
+      "usage": {
+        "input_tokens": 1172,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "10"
+    },
+    {
+      "workload": "git-log",
+      "variant": "rtk",
+      "repeat": 1,
+      "command_exit_code": 0,
+      "output_bytes": 2575,
+      "usage": {
+        "input_tokens": 1172,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "10"
+    },
+    {
+      "workload": "git-log",
+      "variant": "rtk",
+      "repeat": 2,
+      "command_exit_code": 0,
+      "output_bytes": 2575,
+      "usage": {
+        "input_tokens": 1172,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "10"
+    },
+    {
+      "workload": "git-log",
+      "variant": "baseline",
+      "repeat": 2,
+      "command_exit_code": 0,
+      "output_bytes": 2575,
+      "usage": {
+        "input_tokens": 1172,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "10"
+    },
+    {
+      "workload": "git-log",
+      "variant": "baseline",
+      "repeat": 3,
+      "command_exit_code": 0,
+      "output_bytes": 2575,
+      "usage": {
+        "input_tokens": 1172,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "10"
+    },
+    {
+      "workload": "git-log",
+      "variant": "rtk",
+      "repeat": 3,
+      "command_exit_code": 0,
+      "output_bytes": 2575,
+      "usage": {
+        "input_tokens": 1172,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "10"
+    },
+    {
+      "workload": "pytest",
+      "variant": "baseline",
+      "repeat": 1,
+      "command_exit_code": 1,
+      "output_bytes": 7526,
+      "usage": {
+        "input_tokens": 2149,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 12
+      },
+      "correct": true,
+      "answer": "{\"passed\":80,\"failed\":2}"
+    },
+    {
+      "workload": "pytest",
+      "variant": "rtk",
+      "repeat": 1,
+      "command_exit_code": 1,
+      "output_bytes": 296,
+      "usage": {
+        "input_tokens": 146,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 12
+      },
+      "correct": true,
+      "answer": "{\"passed\":80,\"failed\":2}"
+    },
+    {
+      "workload": "pytest",
+      "variant": "rtk",
+      "repeat": 2,
+      "command_exit_code": 1,
+      "output_bytes": 296,
+      "usage": {
+        "input_tokens": 146,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 12
+      },
+      "correct": true,
+      "answer": "{\"passed\":80,\"failed\":2}"
+    },
+    {
+      "workload": "pytest",
+      "variant": "baseline",
+      "repeat": 2,
+      "command_exit_code": 1,
+      "output_bytes": 7526,
+      "usage": {
+        "input_tokens": 2149,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 12
+      },
+      "correct": true,
+      "answer": "{\"passed\":80,\"failed\":2}"
+    },
+    {
+      "workload": "pytest",
+      "variant": "baseline",
+      "repeat": 3,
+      "command_exit_code": 1,
+      "output_bytes": 7526,
+      "usage": {
+        "input_tokens": 2149,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 12
+      },
+      "correct": true,
+      "answer": "{\"passed\":80,\"failed\":2}"
+    },
+    {
+      "workload": "pytest",
+      "variant": "rtk",
+      "repeat": 3,
+      "command_exit_code": 1,
+      "output_bytes": 296,
+      "usage": {
+        "input_tokens": 146,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 12
+      },
+      "correct": true,
+      "answer": "{\"passed\":80,\"failed\":2}"
+    },
+    {
+      "workload": "headroom-json",
+      "variant": "direct",
+      "repeat": 1,
+      "usage": {
+        "input_tokens": 3440,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "100"
+    },
+    {
+      "workload": "headroom-json",
+      "variant": "headroom",
+      "repeat": 1,
+      "usage": {
+        "input_tokens": 1052,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "100"
+    },
+    {
+      "workload": "headroom-json",
+      "variant": "headroom",
+      "repeat": 2,
+      "usage": {
+        "input_tokens": 1052,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "100"
+    },
+    {
+      "workload": "headroom-json",
+      "variant": "direct",
+      "repeat": 2,
+      "usage": {
+        "input_tokens": 3440,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "100"
+    },
+    {
+      "workload": "headroom-json",
+      "variant": "direct",
+      "repeat": 3,
+      "usage": {
+        "input_tokens": 3440,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "100"
+    },
+    {
+      "workload": "headroom-json",
+      "variant": "headroom",
+      "repeat": 3,
+      "usage": {
+        "input_tokens": 1052,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 5
+      },
+      "correct": true,
+      "answer": "100"
+    }
+  ],
+  "headroom": {
+    "status": "ready",
+    "mode": "token",
+    "version": "0.45.0"
+  }
+}

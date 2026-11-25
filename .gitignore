@@ -1,8 +1,29 @@
 certs/
 .env.*
+!.env.example
 image/agent
 image/rtk
 image/opencode.local*.json
 image/engram
 image/sample-repo/
 image/graph/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp

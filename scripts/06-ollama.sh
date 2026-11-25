@@ -1,29 +1,23 @@
 #!/usr/bin/env bash
-# Expose an Ollama server running on the host as https://ollama.default.svc.cluster.local (443).
-# A small in-cluster TLS proxy forwards to the host, because the egress gateway only speaks HTTPS upstream.
-# Needs 05-mock-llm.sh first (CA and egress trust). Env: OLLAMA_MODEL (default qwen2.5-coder:7b),
-# OLLAMA_UPSTREAM (default host.containers.internal:11434).
+# Check an external Ollama server (for example https://ollama.example.com) that the agents will use.
+# Nothing is deployed and no model is loaded: this only lists the models the server has.
+# scripts/10-team-demo.sh reads the same OLLAMA_URL and sends the agents' requests through the egress gateway.
+# Env: OLLAMA_URL (required, HTTPS), OLLAMA_MODEL (default qwen2.5-coder:7b; warns when not listed).
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
-CERTS="$HERE/certs"
 # shellcheck source=./scripts/_utils.sh
 source "$HERE/scripts/_utils.sh"
-HOST=ollama.default.svc.cluster.local
+OLLAMA_URL=${OLLAMA_URL:-}
 MODEL=${OLLAMA_MODEL:-qwen2.5-coder:7b}
-UPSTREAM=${OLLAMA_UPSTREAM:-host.containers.internal:11434}
 
-[ -f "$CERTS/ca.key" ] || { echo "run scripts/main.sh mock-llm first (creates the CA)"; exit 1; }
-curl -fsS "http://localhost:${UPSTREAM##*:}/api/tags" >/dev/null || { echo "Ollama is not answering on localhost:${UPSTREAM##*:}"; exit 1; }
-ollama list | grep -q "^$MODEL" || ollama pull "$MODEL" || echo "WARN: model $MODEL not available locally; pull it before running the demo"
+[[ "$OLLAMA_URL" =~ ^https://[^[:space:]/@?#]+(/[^[:space:]?#@]*)?$ ]] ||
+  { error "OLLAMA_URL must be an HTTPS base URL without credentials, query or fragment, e.g. https://ollama.example.com"; exit 1; }
+OLLAMA_URL=${OLLAMA_URL%/}
 
-if [ ! -f "$CERTS/ollama.crt" ]; then
-  openssl req -newkey rsa:2048 -nodes -subj "/CN=$HOST" -keyout "$CERTS/ollama.key" -out "$CERTS/ollama.csr"
-  printf "subjectAltName=DNS:%s\nbasicConstraints=CA:FALSE\nextendedKeyUsage=serverAuth\n" "$HOST" > "$CERTS/ollama.ext"
-  openssl x509 -req -in "$CERTS/ollama.csr" -CA "$CERTS/ca.crt" -CAkey "$CERTS/ca.key" -CAcreateserial \
-    -days 30 -extfile "$CERTS/ollama.ext" -out "$CERTS/ollama.crt"
+tags=$(curl -fsS --max-time 15 "$OLLAMA_URL/api/tags") || { error "Ollama is not answering at $OLLAMA_URL/api/tags"; exit 1; }
+if printf %s "$tags" | python3 -c 'import json, sys; sys.exit(0 if any(m.get("name") == sys.argv[1] for m in json.load(sys.stdin)["models"]) else 1)' "$MODEL"; then
+  echo "ollama reachable: $OLLAMA_URL (model $MODEL listed)"
+else
+  echo "WARN: ollama reachable at $OLLAMA_URL but model $MODEL is not listed; pull it on that server before running the demo"
 fi
-
-kubectl -n default create secret tls ollama-tls --cert="$CERTS/ollama.crt" --key="$CERTS/ollama.key" --dry-run=client -o yaml | kubectl apply -f -
-UPSTREAM=$UPSTREAM render resources/ollama '${UPSTREAM}' | kubectl apply -f -
-kubectl -n default rollout status deploy/ollama --timeout=300s
-echo "ollama ready: https://$HOST/v1 (model $MODEL)"
+echo "run: OLLAMA_URL=$OLLAMA_URL scripts/10-team-demo.sh"

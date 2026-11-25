@@ -1,9 +1,0 @@
-# Placeholder ${UPSTREAM} (host:port) is filled by scripts/06-ollama.sh (envsubst).
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: default
-resources: [deployment.yaml, service.yaml]
-configMapGenerator:
-  - name: ollama-proxy-code
-    files: [server.py]
-generatorOptions: {disableNameSuffixHash: true}

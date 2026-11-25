@@ -9,7 +9,6 @@
         "baseURL": "{env:LLM_BASE_URL}",
         "apiKey": "{env:LITELLM_API_KEY}",
         "headers": {
-          "Authorization": "Bearer {env:LITELLM_API_KEY}",
           "anthropic-version": "vertex-2023-10-16"
         }
       },

@@ -16,8 +16,5 @@ spec:
         hostnames: ["${LLM_HOST}"]
         effects:
           replaceHeaders:
-            - header: Authorization
-              prefix: "Bearer "
-              credentialUri: "ate-secret://k8s.io/default/tenant-${TENANT}/llm-key/api-key"
             - header: x-api-key
               credentialUri: "ate-secret://k8s.io/default/tenant-${TENANT}/llm-key/api-key"

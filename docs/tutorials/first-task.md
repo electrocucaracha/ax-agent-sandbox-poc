@@ -65,6 +65,8 @@ scripts/03-build-push-image.sh
 
 The script pushes the image to a registry on the `kind` network
 and writes a digest-pinned reference to `.env.opencode`.
+To use a compatible prebuilt image instead, set `IMAGE_SOURCE=external` and `OPENCODE_IMAGE` in the environment or `.env.opencode`;
+the image phase of `scripts/main.sh` then skips the local build.
 
 ## 5. Run the team demo
 
@@ -74,6 +76,8 @@ scripts/10-team-demo.sh
 
 The script creates two tenants, `alpha` and `beta`, each with a private repository.
 It starts three OpenCode agents and one shell agent that work on those repositories.
+If `image/sample-repo/` is absent, the demo fetches Click at the configured `SAMPLE_REPO_REF`
+(default `8.1.8`) from `SAMPLE_REPO_URL`.
 This step takes a few minutes.
 
 ## 6. Read the results

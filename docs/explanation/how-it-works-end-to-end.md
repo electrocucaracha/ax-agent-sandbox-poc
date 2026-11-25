@@ -88,7 +88,7 @@ sequenceDiagram
 ### 1. Capacity: scale the worker pool (step 1)
 
 Substrate runs actors on worker pods.
-The script scales the `ax-workers` pool to the number of tasks that run at once (9 in waves 0 and 1), so they run side by side.
+The script reserves `ax-workers` capacity from the initial task and builder roster (10 workers by default, overridable with `WORKERS`).
 Each worker hosts sandboxed actors; the control plane decides which worker takes which actor.
 
 ### 2. Tenants: users, repositories and Secrets (steps 2 to 4)
@@ -127,15 +127,18 @@ It is immutable from then on: a later push to the repository does not change it.
 ### 4. The epic: parallel work, delivered as PRs
 
 The demo runs one epic (see [Run the team demo](../how-to/run-team-demo.md)).
-Seven builder agents work in parallel, each on its own branch, and open a PR each.
-When they finish, three reviewer agents read the PRs and comment with a verdict.
+Six builder agents work in parallel, each on its own branch, and open a PR each.
+Mutation testing runs next, after the implementation and test branches exist, with its own larger memory budget.
+When it finishes, three reviewer agents read the PRs and comment with a verdict.
 The git server is the single point where the changes meet, so tenants and roles never share a filesystem.
 
 ### 5. Tasks: start from the snapshot (steps 9 to 13)
 
 `resources/task/` defines a Task that mounts the workspace and uses the same Gateway.
 Applying the Task records it; `ax resume task` provisions the actor.
-Substrate restores the snapshot into a fresh gVisor sandbox, so the repository is already at `/workspace/repo`, with no second clone.
+For tasks inheriting the workspace profile, Substrate restores the snapshot into a fresh gVisor sandbox,
+so the repository is already at `/workspace/repo`, with no second clone.
+Mutation overrides the compute profile to increase memory, so AX cold-boots it and reruns workspace setup.
 
 Each task gets its own copy.
 Writes by `alpha/docs` are invisible to `alpha/developer`, even though both started from the same workspace.

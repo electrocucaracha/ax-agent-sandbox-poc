@@ -1,0 +1,242 @@
+{
+  "date": "2026-11-25",
+  "collected_at": "2026-11-25T21:25:03.612310+00:00",
+  "model": "claude-sonnet-4-6",
+  "execution_mode": "Recovered staged run; existing builder branches reused for a targeted mutation retry and reviewer/final-check continuation.",
+  "fresh_orchestrator_exit_code": 1,
+  "fresh_orchestrator_failure": "Mutation exceeded its original 1800-second wave deadline, without a sandbox memory crash.",
+  "cancelled_attempt": "First mutation attempt stopped after preserving usage and diagnostics; its usage is included below.",
+  "continuation_exit_code": 0,
+  "clean_unattended_run_verified": false,
+  "cleanup_verified": {
+    "demo_tasks_removed": true,
+    "demo_workspaces_removed": true,
+    "team_gateways_removed": true,
+    "worker_pool_replicas": 1,
+    "worker_deployment_ready_replicas": 1,
+    "preexisting_git_gateways_preserved": true
+  },
+  "runtime": {
+    "unique_role_commands_completed": 13,
+    "model_backed_completed_roles": 12,
+    "reviewers_completed": [
+      "principal",
+      "security",
+      "performance"
+    ],
+    "mutation_memory_limit": "2Gi",
+    "observed_mutation_memory_total_kib": 2097152,
+    "final_code_mutation_timeout_seconds": 3600,
+    "push": "ok",
+    "pull_request_creation_http_status": 201,
+    "issue_read_http_status": 200,
+    "issue_comment_http_status": 201,
+    "unlisted_host": "refused (000refused)",
+    "suspend_resume_marker": "exact value preserved; assertion passed",
+    "sandbox_llm_key": "placeholder",
+    "cross_tenant_clone": "Failed, as required; assertion passed"
+  },
+  "epic_quality": {
+    "merge_ready": false,
+    "mutation_score": "unverified",
+    "combined_baseline_agent_reported": {
+      "failed": 39,
+      "passed": 29
+    },
+    "mutation_tests_agent_reported": {
+      "passed": 78
+    },
+    "mutation_blocker_agent_reported": "mutmut imports system Click before the instrumented project Click; coverage collection cannot establish a mutation score.",
+    "agent_stop_instructions": "Advisory, not a hard tool-call budget; the retry still performed additional diagnostics.",
+    "review_verdict_counts": {
+      "REQUEST_CHANGES": 6,
+      "APPROVE": 1
+    }
+  },
+  "pull_requests": [
+    {
+      "number": 19,
+      "branch": "epic/mutation",
+      "comment_count": 1,
+      "reviews": [
+        {
+          "role": "principal",
+          "verdict": "REQUEST_CHANGES",
+          "heading": "**[principal] Design Review \u2014 PR #19 (mutation). VERDICT: REQUEST_CHANGES**"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "branch": "epic/developer",
+      "comment_count": 3,
+      "reviews": [
+        {
+          "role": "performance",
+          "verdict": "REQUEST_CHANGES",
+          "heading": "**[performance] Performance review. VERDICT: REQUEST_CHANGES**"
+        },
+        {
+          "role": "principal",
+          "verdict": "REQUEST_CHANGES",
+          "heading": "**[principal] Design Review \u2014 PR #18 (developer). VERDICT: REQUEST_CHANGES**"
+        },
+        {
+          "role": "security",
+          "verdict": "REQUEST_CHANGES",
+          "heading": "**[security] review of PR #18 (developer). VERDICT: REQUEST_CHANGES**"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "branch": "epic/docs",
+      "comment_count": 1,
+      "reviews": [
+        {
+          "role": "principal",
+          "verdict": "REQUEST_CHANGES",
+          "heading": "**[principal] Design Review \u2014 PR #17 (docs). VERDICT: REQUEST_CHANGES**"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "branch": "epic/sre",
+      "comment_count": 1,
+      "reviews": [
+        {
+          "role": "principal",
+          "verdict": "REQUEST_CHANGES",
+          "heading": "**[principal] Design Review \u2014 PR #16 (sre). VERDICT: REQUEST_CHANGES**"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "branch": "epic/quality",
+      "comment_count": 1,
+      "reviews": [
+        {
+          "role": "principal",
+          "verdict": "APPROVE",
+          "heading": "**[principal] Design Review \u2014 PR #15 (quality). VERDICT: APPROVE (conditional on PR #18 fixes)**"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "branch": "epic/ux-designer",
+      "comment_count": 0,
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "branch": "epic/product-owner",
+      "comment_count": 0,
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "branch": "ci-check/plumbing",
+      "comment_count": 0,
+      "reviews": []
+    }
+  ],
+  "opencode_usage_display_including_cancelled_attempt": {
+    "alpha/triage-lead": {
+      "input": "32",
+      "output": "12.3K",
+      "cache_read": "859.5K",
+      "cache_write": "41.2K"
+    },
+    "beta/triage": {
+      "input": "8",
+      "output": "1.2K",
+      "cache_read": "93.4K",
+      "cache_write": "20.8K"
+    },
+    "alpha/developer": {
+      "input": "51",
+      "output": "13.8K",
+      "cache_read": "1.9M",
+      "cache_write": "40.1K"
+    },
+    "alpha/quality": {
+      "input": "49",
+      "output": "23.8K",
+      "cache_read": "2.2M",
+      "cache_write": "58.6K"
+    },
+    "alpha/docs": {
+      "input": "45",
+      "output": "9.5K",
+      "cache_read": "1.7M",
+      "cache_write": "36.7K"
+    },
+    "alpha/ux": {
+      "input": "31",
+      "output": "7.9K",
+      "cache_read": "864.2K",
+      "cache_write": "26.3K"
+    },
+    "alpha/sre": {
+      "input": "34",
+      "output": "13.2K",
+      "cache_read": "909.3K",
+      "cache_write": "26.8K"
+    },
+    "alpha/product-owner": {
+      "input": "25",
+      "output": "6.6K",
+      "cache_read": "547.1K",
+      "cache_write": "16.2K"
+    },
+    "alpha/mutation": {
+      "input": "163",
+      "output": "66.8K",
+      "cache_read": "16.1M",
+      "cache_write": "157.4K"
+    },
+    "alpha/principal": {
+      "input": "56",
+      "output": "16.8K",
+      "cache_read": "2.7M",
+      "cache_write": "59.1K"
+    },
+    "alpha/security": {
+      "input": "42",
+      "output": "13.9K",
+      "cache_read": "1.9M",
+      "cache_write": "47.1K"
+    },
+    "alpha/performance": {
+      "input": "31",
+      "output": "9.8K",
+      "cache_read": "898.6K",
+      "cache_write": "27.4K"
+    },
+    "alpha/mutation-cancelled-attempt": {
+      "input": "194",
+      "output": "47.6K",
+      "cache_read": "16.9M",
+      "cache_write": "139.1K"
+    }
+  },
+  "approximate_token_totals_from_rounded_display": {
+    "input": 761,
+    "output": 243200,
+    "cache_read": 47572100,
+    "cache_write": 696800
+  },
+  "approximate_total_tokens_including_cache": 48512861,
+  "whole_team_savings_measured": false,
+  "limitations": [
+    "Not a clean single-command success: the initial orchestrator exited 1; the targeted retry and continuation exited 0.",
+    "Command completion is not approval of generated changes or proof that epic quality gates pass.",
+    "The combined-baseline and mutation-test counts above are agent-reported, not an independent rerun.",
+    "Not every pull request received a review comment; exact counts are recorded.",
+    "Usage values are rounded OpenCode display counts, including cache reads and writes, not an exact provider ledger.",
+    "The cancelled mutation attempt is included; no matched full-team baseline or monetary savings comparison was run."
+  ]
+}

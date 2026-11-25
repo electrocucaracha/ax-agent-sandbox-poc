@@ -2,6 +2,7 @@
 # Run the numbered scripts as named phases, in the order given.
 #   scripts/main.sh                      # default phases
 #   scripts/main.sh image agent          # chosen phases
+#   IMAGE_SOURCE=external OPENCODE_IMAGE=registry/image@sha256:<digest> scripts/main.sh
 #   PHASES="cluster image" scripts/main.sh
 #   scripts/main.sh list                 # show phases
 # DEBUG=true traces every command. Environment variables pass through to each script.

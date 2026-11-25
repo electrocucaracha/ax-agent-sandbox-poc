@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../team
+patches:
+  - target:
+      group: ax.io
+      version: v1alpha1
+      kind: Gateway
+      name: team-gw
+    patch: |-
+      - op: add
+        path: /spec/egress/1/https/effects/replaceHeaders/-
+        value:
+          header: Authorization
+          prefix: "Bearer "
+          credentialUri: "ate-secret://k8s.io/default/tenant-${TENANT}/llm-key/api-key"
