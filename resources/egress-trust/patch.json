@@ -1,0 +1,4 @@
+[
+  {"op": "add", "path": "/spec/template/spec/volumes/-", "value": {"name": "egress-upstream-ca", "configMap": {"name": "egress-upstream-ca"}}},
+  {"op": "add", "path": "/spec/template/spec/containers/0/volumeMounts/-", "value": {"name": "egress-upstream-ca", "mountPath": "/etc/ssl/certs/ca-certificates.crt", "subPath": "ca-certificates.crt", "readOnly": true}}
+]

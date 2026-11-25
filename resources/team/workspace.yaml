@@ -1,0 +1,16 @@
+apiVersion: ax.io/v1alpha1
+kind: Workspace
+metadata:
+  name: ${WS}
+  atespace: ${TENANT}
+spec:
+  profile:
+    image: "${OPENCODE_IMAGE}"
+  setup:
+    git:
+      - name: origin
+        repo: "https://git.default.svc.cluster.local/${REPO}.git"
+        ref: main
+        dir: repo
+    gateway:
+      name: team-gw

@@ -1,0 +1,23 @@
+apiVersion: ax.io/v1alpha1
+kind: Gateway
+metadata:
+  name: team-gw
+  atespace: ${TENANT}
+spec:
+  egress:
+    - https:
+        hostnames: ["git.default.svc.cluster.local"]
+        effects:
+          replaceHeaders:
+            - header: Authorization
+              prefix: "token "
+              credentialUri: "ate-secret://k8s.io/default/tenant-${TENANT}/git-token/token"
+    - https:
+        hostnames: ["${LLM_HOST}"]
+        effects:
+          replaceHeaders:
+            - header: Authorization
+              prefix: "Bearer "
+              credentialUri: "ate-secret://k8s.io/default/tenant-${TENANT}/llm-key/api-key"
+            - header: x-api-key
+              credentialUri: "ate-secret://k8s.io/default/tenant-${TENANT}/llm-key/api-key"

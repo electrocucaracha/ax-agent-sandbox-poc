@@ -1,0 +1,8 @@
+certs/
+.env.*
+image/agent
+image/rtk
+image/opencode.local*.json
+image/engram
+image/sample-repo/
+image/graph/

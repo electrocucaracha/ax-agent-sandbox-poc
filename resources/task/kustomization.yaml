@@ -1,0 +1,4 @@
+# One agent task. Placeholders are filled by scripts/10-team-demo.sh (envsubst).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: [task.yaml]

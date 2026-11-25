@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: headroom}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: headroom}}
+  template:
+    metadata: {labels: {app: headroom}}
+    spec:
+      containers:
+      - name: headroom
+        image: localhost/headroom:dev
+        imagePullPolicy: Never
+        env:
+        - {name: ANTHROPIC_TARGET_API_URL, value: "${UPSTREAM_URL}"}
+        - {name: SSL_CERT_FILE, value: /ca/ca-certificates.crt}
+        - {name: REQUESTS_CA_BUNDLE, value: /ca/ca-certificates.crt}
+        - {name: HEADROOM_TELEMETRY, value: "off"}
+        ports: [{containerPort: 8443}]
+        volumeMounts: [{name: tls, mountPath: /tls}, {name: ca, mountPath: /ca}]
+      volumes:
+      - {name: tls, secret: {secretName: headroom-tls}}
+      - {name: ca, configMap: {name: upstream-ca}}

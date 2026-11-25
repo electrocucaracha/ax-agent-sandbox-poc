@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: ollama}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: ollama}}
+  template:
+    metadata: {labels: {app: ollama}}
+    spec:
+      containers:
+      - name: proxy
+        image: docker.io/library/python:3.12-slim
+        command: ["python", "-u", "/code/server.py"]
+        env:
+        - {name: UPSTREAM, value: "${UPSTREAM}"}
+        ports: [{containerPort: 8443}]
+        volumeMounts: [{name: code, mountPath: /code}, {name: tls, mountPath: /tls}]
+      volumes:
+      - {name: code, configMap: {name: ollama-proxy-code}}
+      - {name: tls, secret: {secretName: ollama-tls}}

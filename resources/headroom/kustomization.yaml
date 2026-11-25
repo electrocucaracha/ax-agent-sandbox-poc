@@ -1,0 +1,5 @@
+# Placeholder ${UPSTREAM_URL} is filled by scripts/07-headroom.sh (envsubst).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources: [deployment.yaml, service.yaml]

@@ -1,0 +1,5 @@
+# Placeholder ${GIT_IMAGE} is filled by scripts/09-git-server.sh (envsubst).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources: [deployment.yaml, service.yaml]

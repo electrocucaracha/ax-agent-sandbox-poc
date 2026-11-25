@@ -1,0 +1,37 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: ${TASK}
+  atespace: ${TENANT}
+spec:
+  workspace:
+    name: ${WS}
+  gateway:
+    name: team-gw
+  commands:
+    - sh
+    - -c
+    - |
+      mkdir -p $HOME && cd /workspace/repo
+      {
+        if [ "$AGENT_RUNNER" = script ]; then
+          printf %s "$AGENT_PROMPT_B64" | base64 -d > /workspace/run.sh; sh /workspace/run.sh
+        else
+          printf %s "$AGENT_PROMPT_B64" | base64 -d > /workspace/prompt.md
+          opencode run "Follow the attached instructions." -f /workspace/prompt.md
+        fi
+      } > /workspace/out.log 2>&1
+      touch /workspace/done
+      sleep ${HOLD_SECONDS}
+  env:
+    - name: AGENT_RUNNER
+      value: ${RUNNER}
+    - name: AGENT_PROMPT_B64
+      value: "${PROMPT_B64}"
+    - name: LITELLM_API_KEY
+      value: placeholder
+    - name: LLM_BASE_URL
+      value: "https://${LLM_HOST}${LLM_PATH}"
+    - name: OPENCODE_CONFIG
+      value: "${OC_CONFIG}"
+  debug: true

@@ -1,0 +1,5 @@
+# Per-tenant objects. Placeholders ${TENANT} ${WS} ${REPO} ${LLM_HOST} ${OPENCODE_IMAGE} are filled by
+# scripts/10-team-demo.sh (envsubst), because ax resources are not Kubernetes namespaced objects.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: [gateway.yaml, workspace.yaml]

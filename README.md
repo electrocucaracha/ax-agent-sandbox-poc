@@ -1,0 +1,142 @@
+# AX Agent Sandbox
+
+Run coding tasks from multiple AI agents on shared infrastructure, safely and efficiently, in a multi-tenant environment.
+
+This project shows how three layers work together:
+
+| Layer                 | Component                                                       | Role                                                                                          |
+| --------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Isolation and runtime | [Agent Substrate](https://github.com/agent-substrate/substrate) | Runs each agent in a gVisor sandbox on a shared worker pool, and checkpoints and restores it. |
+| Orchestration         | [Google AX](https://github.com/google/ax)                       | Schedules tasks and scopes tasks, gateways, workspaces and models by tenant (atespace).       |
+| Agents                | [OpenCode](https://opencode.ai) and other headless CLI agents   | Do the coding work against any OpenAI-compatible or Anthropic-format LLM endpoint.            |
+
+The scripts, manifests and images build the whole stack on a local [kind](https://kind.sigs.k8s.io) cluster,
+so you can see the pieces interact before you move to a shared cluster.
+
+```mermaid
+flowchart TB
+    subgraph tenants["Tenants (AX atespaces)"]
+        direction LR
+        ta["Tenant A<br/>Gateway + Secret A"]
+        tb["Tenant B<br/>Gateway + Secret B"]
+    end
+    ax["AX<br/>scheduling and scoping"]
+    subgraph pool["Shared Substrate worker pool"]
+        direction LR
+        a1["Sandbox: agent 1<br/>(Tenant A)"]
+        a2["Sandbox: agent 2<br/>(Tenant A)"]
+        b1["Sandbox: agent 3<br/>(Tenant B)"]
+    end
+    egress["Egress gateway<br/>per-tenant allowlist + key injection"]
+    llm([LLM endpoints])
+
+    tenants --> ax --> pool
+    a1 & a2 & b1 --> egress --> llm
+```
+
+## Why use it
+
+| Benefit                            | How it works                                                                                                                            |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Many agents, shared capacity**   | Sandboxes share a worker pool. Idle tasks can be suspended and checkpointed, then resumed, so capacity goes to agents that are working. |
+| **Tenant separation**              | AX scopes tasks, gateways, workspaces and models by atespace, and each Gateway carries its own allowlist and credential reference.      |
+| **Credentials never reach agents** | Each agent holds a placeholder. The egress gateway swaps in the tenant's real key from a Kubernetes Secret on the way out.              |
+| **Strong isolation**               | Every task runs in a gVisor sandbox, so agent-run commands do not touch the host or neighbouring agents.                                |
+| **Network control**                | An agent reaches only the hosts its Gateway lists. Everything else is refused.                                                          |
+| **Durable work**                   | `/workspace` survives suspend and resume, so a task continues where it stopped.                                                         |
+| **Agent-agnostic**                 | OpenCode is the reference agent. Another headless CLI agent needs only a new image and command.                                         |
+| **Bring your own model**           | Works with any endpoint that speaks the OpenAI chat or Anthropic messages format.                                                       |
+| **Token savers**                   | Prebuilt integrations for rtk, Headroom, Engram and Graphify, with measured results.                                                    |
+
+## What it is good for
+
+- Learning how Substrate, AX and coding agents fit together.
+- Prototyping a shared agent platform with per-tenant credentials and network policy.
+- Running agents on untrusted code without exposing keys or the host.
+- Measuring agent behavior and token cost under controlled conditions.
+
+## What is included
+
+| Capability                                                            | Status                                                |
+| --------------------------------------------------------------------- | ----------------------------------------------------- |
+| Task runs in a gVisor sandbox on kind                                 | Verified                                              |
+| Custom agent image from a local registry                              | Verified                                              |
+| Real API key injected at egress, sandbox sees only a placeholder      | Verified (mock and real gateway)                      |
+| Hosts outside the Gateway allowlist are refused                       | Verified                                              |
+| `/workspace` state survives suspend and resume                        | Verified                                              |
+| OpenCode completes prompts through the injected key                   | Verified                                              |
+| Token-saving tools (rtk, Headroom, Engram, Graphify)                  | Verified to run; savings vary by workload             |
+| Several agents running concurrently on the shared pool                | Verified (11 tasks; the full epic needs a real model) |
+| Tenant separation across atespaces (separate keys, credential policy) | Verified (2 atespaces)                                |
+| Long-running sessions on large repositories                           | Not tested                                            |
+| Memory shared across tasks                                            | Not tested                                            |
+
+The multi-agent and multi-tenant rows describe the design this project builds toward.
+The verified rows come from single-task runs.
+See [Multi-agent and multi-tenant design](docs/explanation/multi-agent-multitenancy.md) for how the pieces map and what a test needs.
+
+## Quickstart
+
+You need Podman or Docker (6 GiB RAM or more for the VM), `kind`, `kubectl`, `curl` and `envsubst`.
+Run from the project root:
+
+```bash
+scripts/00-preflight.sh --fix
+scripts/01-install-ax.sh
+export PATH="$HOME/.ax/bin:$PATH"
+scripts/02-start-cluster.sh        # first start pulls about 570 MB
+scripts/05-mock-llm.sh
+scripts/03-build-push-image.sh
+scripts/09-git-server.sh
+scripts/10-team-demo.sh            # one epic, 10 role agents in 2 waves, delivered as PRs
+scripts/99-teardown.sh
+```
+
+The demo shows each agent's output, the placeholder key in the sandbox, and the mock LLM receiving each tenant's own key.
+`scripts/main.sh` runs the same phases in one command.
+For a guided walkthrough, follow the [first-task tutorial](docs/tutorials/first-task.md).
+To use a real model, see [Use a real LLM endpoint](docs/how-to/use-real-llm-endpoint.md).
+To use a local model, see [Run the team demo with Ollama](docs/how-to/run-team-demo-with-ollama.md).
+
+## Token-saving tools
+
+| Tool                                                          | What it does                        | Measured effect (single run)                                |
+| ------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
+| [Graphify](docs/how-to/enable-token-saving-tools.md#graphify) | Code knowledge graph for navigation | About 28% fewer tokens, 58% fewer tool calls                |
+| [Headroom](docs/how-to/enable-token-saving-tools.md#headroom) | Context-compression proxy           | About 2.5% on plain-text output; aimed at JSON and logs     |
+| [rtk](docs/how-to/enable-token-saving-tools.md#rtk)           | Shell output compression            | No saving on the test; capped output caused a rerun         |
+| [Engram](docs/how-to/enable-token-saving-tools.md#engram)     | Persistent memory over MCP          | Recall across sessions works; adds tool-definition overhead |
+
+Savings depend on the workload.
+Read the [findings](docs/explanation/token-saving-findings.md) before you adopt one.
+
+## Documentation
+
+| Section     | Pages                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tutorial    | [Run your first sandboxed task](docs/tutorials/first-task.md)                                                                                                                                                                                                                                                                                                                                                                                              |
+| How-to      | [Real LLM endpoint](docs/how-to/use-real-llm-endpoint.md), [Private CA](docs/how-to/trust-private-ca.md), [Token-saving tools](docs/how-to/enable-token-saving-tools.md), [Another agent](docs/how-to/plug-in-another-agent.md), [Team demo](docs/how-to/run-team-demo.md), [Team demo with Ollama](docs/how-to/run-team-demo-with-ollama.md), [Git server](docs/how-to/host-repositories-with-git-server.md), [Troubleshoot](docs/how-to/troubleshoot.md) |
+| Reference   | [Scripts and configuration](docs/reference/scripts-and-configuration.md)                                                                                                                                                                                                                                                                                                                                                                                   |
+| Explanation | [How it all works together](docs/explanation/how-it-works-end-to-end.md), [How AX and Substrate work together](docs/explanation/ax-and-substrate.md), [Architecture](docs/explanation/architecture.md), [Multi-agent and multi-tenant design](docs/explanation/multi-agent-multitenancy.md), [Credential injection](docs/explanation/credential-injection.md), [Token-saving findings](docs/explanation/token-saving-findings.md)                          |
+
+## Project layout
+
+```text
+scripts/     numbered setup and run scripts
+resources/   Kubernetes and AX YAML as kustomizations (mock-llm, git-server, ollama, headroom, team, task)
+agents/      agent definitions: the epic, team rules, one file per role, ci-check
+image/       Dockerfile (one file, all agent tools) and agent configs
+docs/        tutorials, how-to guides, reference, explanation
+```
+
+Git ignores `certs/`, `.env.*`, the `rtk` and `engram` binaries, `image/opencode.local.json`,
+`image/sample-repo/` and `image/graph/`.
+
+## Limitations
+
+- **Alpha dependencies.** AX is `v0.4.0-rc.1` (API `v1alpha1`) and Substrate is `v1.0.0`.
+  The scripts pin both, and the APIs may change.
+- **Header-based auth only.** Key injection replaces HTTP headers on `https` rules with a specific host.
+- **No runtime installs.** The sandbox has no registry access, so bake every dependency into the image.
+- **Local scale.** The setup targets one machine, not a multi-node cluster, and fixed task names per demo run.
+- **Proxies see the key.** A proxy on the request path, such as Headroom, receives the real key.
