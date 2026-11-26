@@ -109,6 +109,7 @@ To select another model:
    ```
 
    If you use a prebuilt image, publish and select an updated compatible image containing the changed configuration instead.
+
 3. Check that the selected model is listed, for example:
 
    ```bash
@@ -169,15 +170,15 @@ It does not stop or change your external Ollama service or TLS reverse proxy.
 
 ## If it fails
 
-| Symptom                                  | Likely cause                                                                             |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `OLLAMA_URL must be an HTTPS base URL`   | The URL is plain HTTP, has credentials, a query or a fragment. Use an HTTPS reverse proxy. |
-| `Ollama is not answering`                | Check DNS, firewall access, `/api/tags` forwarding and workstation CA trust. For a private CA, set `CURL_CA_BUNDLE` for the probe. |
-| `WARN: ... model ... is not listed`      | Ask the server operator to install the model, or match `OLLAMA_MODEL` to the exact installed tag. Do not treat this as model readiness. |
-| Probe succeeds, agents cannot connect    | Check reachability from the gateway, gateway CA trust, and streaming `/v1/*` forwarding. A workstation probe does not test these. |
-| Agents use the previous provider         | Remove conflicting `LITELLM_PROXY_API_BASE` and `OC_CONFIG` settings from both your shell and `.env.opencode`. |
-| `model not found`                         | Match the model tag in the image's Ollama config to the external server's model list; rebuild or replace the image after editing it. |
-| Agents loop or never call tools          | The model lacks tool support, or the context is too small. Use a larger model.           |
+| Symptom                                | Likely cause                                                                                                                            |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `OLLAMA_URL must be an HTTPS base URL` | The URL is plain HTTP, has credentials, a query or a fragment. Use an HTTPS reverse proxy.                                              |
+| `Ollama is not answering`              | Check DNS, firewall access, `/api/tags` forwarding and workstation CA trust. For a private CA, set `CURL_CA_BUNDLE` for the probe.      |
+| `WARN: ... model ... is not listed`    | Ask the server operator to install the model, or match `OLLAMA_MODEL` to the exact installed tag. Do not treat this as model readiness. |
+| Probe succeeds, agents cannot connect  | Check reachability from the gateway, gateway CA trust, and streaming `/v1/*` forwarding. A workstation probe does not test these.       |
+| Agents use the previous provider       | Remove conflicting `LITELLM_PROXY_API_BASE` and `OC_CONFIG` settings from both your shell and `.env.opencode`.                          |
+| `model not found`                      | Match the model tag in the image's Ollama config to the external server's model list; rebuild or replace the image after editing it.    |
+| Agents loop or never call tools        | The model lacks tool support, or the context is too small. Use a larger model.                                                          |
 
 ## Verification scope
 

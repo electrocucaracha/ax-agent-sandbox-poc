@@ -82,13 +82,13 @@ Nothing is merged: a person decides.
 
 ## How a role is defined
 
-| File                                          | Content                                                               |
-| --------------------------------------------- | --------------------------------------------------------------------- |
-| `agents/epic.md`                             | The goal, requirements and quality gates. Sent to every epic role.    |
+| File                                        | Content                                                               |
+| ------------------------------------------- | --------------------------------------------------------------------- |
+| `agents/epic.md`                            | The goal, requirements and quality gates. Sent to every epic role.    |
 | `agents/_builder.md`, `agents/_reviewer.md` | How the team works: lane, branch, commits, tests, PR format, secrets. |
-| `agents/<role>.md`                           | What this role owns, does and does not do, and when it is done.       |
-| `agents/triage-epic.md`                      | The triage lead: roster, issue format and API calls.                  |
-| `agents/ci-check.sh`                         | A shell script for an agent that needs no model.                      |
+| `agents/<role>.md`                          | What this role owns, does and does not do, and when it is done.       |
+| `agents/triage-epic.md`                     | The triage lead: roster, issue format and API calls.                  |
+| `agents/ci-check.sh`                        | A shell script for an agent that needs no model.                      |
 
 The script joins the files, base64-encodes the result into the task's `AGENT_PROMPT_B64` variable, and the task attaches it with `opencode run -f`.
 To add a role, create `agents/<role>.md` and add the role to `BUILDERS` or `REVIEWERS` in `scripts/10-team-demo.sh`, and to the roster in `agents/triage-epic.md` and the plan in `scripts/issues.py`.
@@ -112,18 +112,18 @@ These are usage measurements; they are not savings comparisons without a matched
 
 Historical run with the mock LLM, before mutation was separated into its own wave:
 
-| Check                                        | Result                                                      |
-| -------------------------------------------- | ----------------------------------------------------------- |
-| Both workspaces clone their private repo     | `Ready`                                                     |
-| 9 tasks of waves 0 and 1, then 3 of wave 2   | All reached `Working`, finished, and were collected         |
+| Check                                         | Result                                                                               |
+| --------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Both workspaces clone their private repo      | `Ready`                                                                              |
+| 9 tasks of waves 0 and 1, then 3 of wave 2    | All reached `Working`, finished, and were collected                                  |
 | Epic as issue #1, role issues, one agent each | The script created 10 role issues from the fixed plan and started one task per issue |
-| Issue API from a sandbox                     | `ci-check` commented on issue #1 with the placeholder header |
-| Push and PR creation from a sandbox          | `ci-check` pushed a branch, and PR #1 exists on `alpha/app` |
-| Host outside the Gateway allowlist           | Refused (`ci-check` gets no response from `example.com`)    |
-| `/workspace` across suspend and resume       | Marker file survives                                        |
-| LLM receives each tenant's own key           | `sk-tenant-alpha-KEY` and `sk-tenant-beta-KEY`              |
-| Sandbox environment                          | `LITELLM_API_KEY=placeholder`, no git token                 |
-| `beta` clones `alpha/app` with its own token | Workspace `Failed`                                          |
+| Issue API from a sandbox                      | `ci-check` commented on issue #1 with the placeholder header                         |
+| Push and PR creation from a sandbox           | `ci-check` pushed a branch, and PR #1 exists on `alpha/app`                          |
+| Host outside the Gateway allowlist            | Refused (`ci-check` gets no response from `example.com`)                             |
+| `/workspace` across suspend and resume        | Marker file survives                                                                 |
+| LLM receives each tenant's own key            | `sk-tenant-alpha-KEY` and `sk-tenant-beta-KEY`                                       |
+| Sandbox environment                           | `LITELLM_API_KEY=placeholder`, no git token                                          |
+| `beta` clones `alpha/app` with its own token  | Workspace `Failed`                                                                   |
 
 The mock LLM returns canned replies, so its role agents opened no feature PRs and did not verify the epic's quality gates.
 
@@ -132,18 +132,18 @@ The mock LLM returns canned replies, so its role agents opened no feature PRs an
 The [recorded results](../explanation/team-demo-2026-11-25.json) use `claude-sonnet-4-6`
 through the configured internal gateway.
 
-| Check | Result |
-| ----- | ------ |
-| Triage creates the ten role assignments | Completed |
-| Six parallel builders | Completed |
-| Mutation sandbox memory | `2Gi` observed; no repeat of the earlier memory-limit crash |
-| Mutation role | Completed after cancelling an over-budget attempt and retrying only this role |
-| Principal, security and performance reviewers | All completed |
-| Local pull requests | 8; 7 review comments: 6 `REQUEST_CHANGES`, 1 conditional `APPROVE` |
-| Git push, PR creation, issue read/comment | Successful; HTTP 201 / 200 / 201 |
-| Unlisted host | Refused |
-| Suspend/resume | Exact marker preserved; asserted |
-| Cross-tenant clone | `Failed`, as required; asserted |
+| Check                                         | Result                                                                        |
+| --------------------------------------------- | ----------------------------------------------------------------------------- |
+| Triage creates the ten role assignments       | Completed                                                                     |
+| Six parallel builders                         | Completed                                                                     |
+| Mutation sandbox memory                       | `2Gi` observed; no repeat of the earlier memory-limit crash                   |
+| Mutation role                                 | Completed after cancelling an over-budget attempt and retrying only this role |
+| Principal, security and performance reviewers | All completed                                                                 |
+| Local pull requests                           | 8; 7 review comments: 6 `REQUEST_CHANGES`, 1 conditional `APPROVE`            |
+| Git push, PR creation, issue read/comment     | Successful; HTTP 201 / 200 / 201                                              |
+| Unlisted host                                 | Refused                                                                       |
+| Suspend/resume                                | Exact marker preserved; asserted                                              |
+| Cross-tenant clone                            | `Failed`, as required; asserted                                               |
 
 This was a **recovered staged run**, not a clean single-command success.
 The fresh orchestrator exited 1 when mutation exceeded its original 1800-second deadline.

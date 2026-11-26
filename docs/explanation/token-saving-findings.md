@@ -21,11 +21,11 @@ and Headroom `0.45.0` in `token` mode on `aarch64`.
 The [raw results](token-saving-benchmark-2026-11-25.json) record every request,
 the image digest, output sizes, expected fixture exit codes, and answer checks.
 
-| Workload | Baseline input tokens | Tool input tokens | Input tokens saved | Input saving | Total tokens, baseline/tool |
-| -------- | --------------------- | ----------------- | ------------------ | ------------ | --------------------------- |
-| `git log -10 --stat`, plain versus rtk | 1,172 | 1,172 | 0 | 0.0% | 1,177 / 1,177 |
-| Verbose pytest output, plain versus rtk | 2,149 | 146 | 2,003 | **93.2%** | 2,161 / 158 |
-| JSON history, direct versus Headroom | 3,440 | 1,052 | 2,388 | **69.4%** | 3,445 / 1,057 |
+| Workload                                | Baseline input tokens | Tool input tokens | Input tokens saved | Input saving | Total tokens, baseline/tool |
+| --------------------------------------- | --------------------- | ----------------- | ------------------ | ------------ | --------------------------- |
+| `git log -10 --stat`, plain versus rtk  | 1,172                 | 1,172             | 0                  | 0.0%         | 1,177 / 1,177               |
+| Verbose pytest output, plain versus rtk | 2,149                 | 146               | 2,003              | **93.2%**    | 2,161 / 158                 |
+| JSON history, direct versus Headroom    | 3,440                 | 1,052             | 2,388              | **69.4%**    | 3,445 / 1,057               |
 
 Values are medians across three requests per variant; token counts were identical within each variant.
 Total tokens include output; total-token savings were 92.7% for pytest and 69.3% for JSON history.
@@ -86,13 +86,13 @@ The [raw run summary](team-demo-2026-11-25.json) preserves usage by role and the
 The initial orchestrator timed out (exit 1); a targeted retry and reviewer/final-check continuation
 completed (exit 0). This is not a verified clean unattended run.
 
-| OpenCode usage counter | Approximate tokens, including the cancelled attempt |
-| ---------------------- | -------------------------------------------------- |
-| Uncached input | 761 |
-| Output | 243.2K |
-| Cache read | 47.6M |
-| Cache write | 696.8K |
-| Total, including cache counters | 48.5M |
+| OpenCode usage counter          | Approximate tokens, including the cancelled attempt |
+| ------------------------------- | --------------------------------------------------- |
+| Uncached input                  | 761                                                 |
+| Output                          | 243.2K                                              |
+| Cache read                      | 47.6M                                               |
+| Cache write                     | 696.8K                                              |
+| Total, including cache counters | 48.5M                                               |
 
 These are sums of rounded `opencode stats` displays, not an exact provider ledger or a bill.
 The cancelled mutation attempt alone reported 16.9M cache-read tokens and 47.6K output tokens;
@@ -135,12 +135,12 @@ Headroom runs outside it and shrinks the request in transit.
 
 ## Summary
 
-| Tool     | What it does                   | Works in the sandbox | Measured effect                                              |
-| -------- | ------------------------------ | -------------------- | ------------------------------------------------------------ |
-| rtk      | Compresses shell output        | Yes                  | 93.2% fewer input tokens on verbose pytest; no saving on `git log -10 --stat` |
+| Tool     | What it does                   | Works in the sandbox | Measured effect                                                                            |
+| -------- | ------------------------------ | -------------------- | ------------------------------------------------------------------------------------------ |
+| rtk      | Compresses shell output        | Yes                  | 93.2% fewer input tokens on verbose pytest; no saving on `git log -10 --stat`              |
 | Headroom | Compresses requests in a proxy | Yes                  | 69.4% fewer input tokens on synthetic JSON history; older plain-text test saved about 2.5% |
-| Engram   | Persistent memory over MCP     | Yes                  | Recall across sessions works; adds about 27 tool definitions |
-| Graphify | Code graph for navigation      | Yes                  | About 28% fewer tokens and 58% fewer tool calls              |
+| Engram   | Persistent memory over MCP     | Yes                  | Recall across sessions works; adds about 27 tool definitions                               |
+| Graphify | Code graph for navigation      | Yes                  | About 28% fewer tokens and 58% fewer tool calls                                            |
 
 ## rtk
 

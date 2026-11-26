@@ -5,4 +5,4 @@ resources: [deployment.yaml, service.yaml]
 configMapGenerator:
   - name: mock-llm-code
     files: [server.py]
-generatorOptions: {disableNameSuffixHash: true}
+generatorOptions: { disableNameSuffixHash: true }

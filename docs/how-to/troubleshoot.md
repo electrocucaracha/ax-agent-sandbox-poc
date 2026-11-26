@@ -14,11 +14,11 @@ Diagnose common failures.
 
 ## Network and TLS errors
 
-| Symptom                                                  | Cause                                          | Fix                                                                                        |
-| -------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `Proxy refused to open a tunnel: 407` inside the sandbox | The agent downloaded a package at runtime      | Pre-install it in the image.                                                               |
+| Symptom                                                  | Cause                                      | Fix                                                                                        |
+| -------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `Proxy refused to open a tunnel: 407` inside the sandbox | The agent downloaded a package at runtime  | Pre-install it in the image.                                                               |
 | `407` when pushing the image                             | The host push went through a network proxy | `03-build-push-image.sh` pushes from inside the VM with `NO_PROXY` set to the registry IP. |
-| Upstream certificate rejected                            | The egress gateway does not trust the CA       | [Trust a private CA](trust-private-ca.md).                                                 |
+| Upstream certificate rejected                            | The egress gateway does not trust the CA   | [Trust a private CA](trust-private-ca.md).                                                 |
 
 ## LLM errors
 

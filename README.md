@@ -57,19 +57,19 @@ flowchart TB
 
 ## What is included
 
-| Capability                                                            | Status                                                |
-| --------------------------------------------------------------------- | ----------------------------------------------------- |
-| Task runs in a gVisor sandbox on kind                                 | Verified                                              |
-| Custom agent image from a local registry                              | Verified                                              |
-| Real API key injected at egress, sandbox sees only a placeholder      | Verified (mock and real gateway)                      |
-| Hosts outside the Gateway allowlist are refused                       | Verified                                              |
-| `/workspace` state survives suspend and resume                        | Verified                                              |
-| OpenCode completes prompts through the injected key                   | Verified                                              |
-| Token-saving tools (rtk, Headroom, Engram, Graphify)                  | Verified to run; savings vary by workload             |
+| Capability                                                            | Status                                                                        |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Task runs in a gVisor sandbox on kind                                 | Verified                                                                      |
+| Custom agent image from a local registry                              | Verified                                                                      |
+| Real API key injected at egress, sandbox sees only a placeholder      | Verified (mock and real gateway)                                              |
+| Hosts outside the Gateway allowlist are refused                       | Verified                                                                      |
+| `/workspace` state survives suspend and resume                        | Verified                                                                      |
+| OpenCode completes prompts through the injected key                   | Verified                                                                      |
+| Token-saving tools (rtk, Headroom, Engram, Graphify)                  | Verified to run; savings vary by workload                                     |
 | Several agents running concurrently on the shared pool                | Verified with a real provider; full workflow recovered after a mutation retry |
-| Tenant separation across atespaces (separate keys, credential policy) | Verified (2 atespaces)                                |
-| Long-running sessions on large repositories                           | Not tested                                            |
-| Memory shared across tasks                                            | Not tested                                            |
+| Tenant separation across atespaces (separate keys, credential policy) | Verified (2 atespaces)                                                        |
+| Long-running sessions on large repositories                           | Not tested                                                                    |
+| Memory shared across tasks                                            | Not tested                                                                    |
 
 The [real-provider team run](docs/how-to/run-team-demo.md#real-provider-recovered-run-2026-11-25)
 completed all stages after a targeted mutation retry, including reviewers and isolation checks.
@@ -105,12 +105,12 @@ To use an external Ollama server, see [Run the team demo with Ollama](docs/how-t
 
 ## Token-saving tools
 
-| Tool                                                          | What it does                        | Measured effect                                             |
-| ------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
-| [Graphify](docs/how-to/enable-token-saving-tools.md#graphify) | Code knowledge graph for navigation | About 28% fewer tokens, 58% fewer tool calls (older single run) |
-| [Headroom](docs/how-to/enable-token-saving-tools.md#headroom) | Context-compression proxy           | 69.4% fewer input tokens on synthetic JSON history         |
+| Tool                                                          | What it does                        | Measured effect                                                      |
+| ------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------- |
+| [Graphify](docs/how-to/enable-token-saving-tools.md#graphify) | Code knowledge graph for navigation | About 28% fewer tokens, 58% fewer tool calls (older single run)      |
+| [Headroom](docs/how-to/enable-token-saving-tools.md#headroom) | Context-compression proxy           | 69.4% fewer input tokens on synthetic JSON history                   |
 | [rtk](docs/how-to/enable-token-saving-tools.md#rtk)           | Shell output compression            | 93.2% fewer input tokens on verbose pytest; 0% on ten-commit Git log |
-| [Engram](docs/how-to/enable-token-saving-tools.md#engram)     | Persistent memory over MCP          | Recall across sessions works; adds tool-definition overhead |
+| [Engram](docs/how-to/enable-token-saving-tools.md#engram)     | Persistent memory over MCP          | Recall across sessions works; adds tool-definition overhead          |
 
 The rtk and Headroom results are from three paired requests per workload on 2026-11-25;
 all 18 answer checks passed. They measure bounded context compression, not whole-agent savings.

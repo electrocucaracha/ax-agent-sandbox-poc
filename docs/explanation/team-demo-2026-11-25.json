@@ -19,11 +19,7 @@
   "runtime": {
     "unique_role_commands_completed": 13,
     "model_backed_completed_roles": 12,
-    "reviewers_completed": [
-      "principal",
-      "security",
-      "performance"
-    ],
+    "reviewers_completed": ["principal", "security", "performance"],
     "mutation_memory_limit": "2Gi",
     "observed_mutation_memory_total_kib": 2097152,
     "final_code_mutation_timeout_seconds": 3600,
