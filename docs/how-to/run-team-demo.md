@@ -150,7 +150,8 @@ The fresh orchestrator exited 1 when mutation exceeded its original 1800-second 
 After preserving its usage and stopping that attempt, a targeted mutation retry reused the existing
 builder branches; the reviewer/final-check continuation exited 0.
 The final script now gives mutation its own overall deadline and retains early tasks through all waves.
-A new unattended run with all final changes has not yet been verified.
+This recovered run does not verify current unattended behavior.
+See the fresh single-invocation result below.
 
 **The generated feature is not merge-ready.** The mutation agent reported 39 failed and 29 passed
 combined developer/quality baseline tests, and 78 passing tests of its own.
@@ -162,6 +163,25 @@ Task completion therefore does not imply quality-gate approval.
 
 See the [token findings](../explanation/token-saving-findings.md#full-team-runtime-check-2026-11-25)
 for usage including the cancelled attempt. No whole-team savings percentage was measured.
+
+### Evidence-skill single-invocation run: 2026-11-26
+
+The [fresh validation report](../explanation/runtime-validation-report.md#full-team-rerun)
+records one invocation with the admitted evidence skill, eight workers and no retries.
+It exited **1** after **53.5 minutes**.
+Triage, builders and mutation completed and created eight local PRs.
+All three reviewer sandboxes exceeded their memory limits; no reviews were posted.
+The final suspend/resume, credential and cross-tenant assertions were not reached.
+
+Independent seed and combined developer/quality pytest suites both exited **2**
+at collection under pytest 9.2.0, with the same legacy parametrization warning.
+The mutation agent's reported 92.2% selected-code score excludes five tests and
+has not been independently reproduced.
+Neither task completion nor that scoped score is a full quality-gate pass.
+
+Demo resources were removed and the worker pool returned to one ready worker.
+The report separately records a matched original/improved evidence-skill replay;
+that replay, not this unmatched team run, supports the bounded reporting gain.
 
 ## Related
 

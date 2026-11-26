@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "protocol_version": 2,
+  "generated_at": "2026-11-26T04:11:14.761025+00:00",
+  "target": "agents/mutation.md",
+  "original_sha256": "5f80da89866250eb2143484d343fcd29f196fc6df9c3b3bf84bb4c122093d84b",
+  "suite_sha256": "be0af82c045b566fef42386ae49ae0eb9dfbb49bd9f9e07cee99439bacad73f6",
+  "model": "claude-sonnet-4-6",
+  "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+  "repetitions": 2,
+  "evaluation_scope": "LLM structured decisions, not tool execution or full coding tasks",
+  "iterations": [
+    {
+      "iteration": 1,
+      "baseline": [
+        {
+          "id": "failed-baseline",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 677,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "attempts-exhausted",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 681,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "valid-survivor",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"next_action\":\"write_killing_test\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 682,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "timeout",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_partial\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 677,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 18
+          }
+        },
+        {
+          "id": "missing-branches",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 680,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "ready-first-attempt",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"run_mutmut\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 683,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "ready-first-attempt",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"run_mutmut\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 683,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "missing-branches",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 680,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "timeout",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_partial\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 677,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 18
+          }
+        },
+        {
+          "id": "valid-survivor",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"next_action\":\"write_killing_test\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 682,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "attempts-exhausted",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 681,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "failed-baseline",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 677,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        }
+      ],
+      "proposer_usage": {
+        "input_tokens": 1164,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 192
+      },
+      "proposer_answer": "{\"addition\":\"## Score verification clarification\\n\\nA mutation score is considered verified (score_verified: true) when ALL of the following conditions are met:\\n1. The combined baseline tests have been run and pass (zero failures).\\n2. A mutmut run has completed without timing out (exit code is not 124) and has produced a valid mutant collection.\\n3. The mutant collection was scoped to the new config module and refactored value-resolution code only.\\n\\nIf the baseline passes AND a scoped mutmut run completes with a valid mutant list, the score is verified even if surviving mutants remain \u2014 surviving mutants trigger write_killing_test, not score_verified: false.\\n\\nDo not set score_verified: false solely because surviving mutants exist after a completed, valid run with a passing baseline.\"}",
+      "addition": "## Score verification clarification\n\nA mutation score is considered verified (score_verified: true) when ALL of the following conditions are met:\n1. The combined baseline tests have been run and pass (zero failures).\n2. A mutmut run has completed without timing out (exit code is not 124) and has produced a valid mutant collection.\n3. The mutant collection was scoped to the new config module and refactored value-resolution code only.\n\nIf the baseline passes AND a scoped mutmut run completes with a valid mutant list, the score is verified even if surviving mutants remain - surviving mutants trigger write_killing_test, not score_verified: false.\n\nDo not set score_verified: false solely because surviving mutants exist after a completed, valid run with a passing baseline.",
+      "candidate": [
+        {
+          "id": "failed-baseline",
+          "split": "train",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 853,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "attempts-exhausted",
+          "split": "train",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 857,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "valid-survivor",
+          "split": "train",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"write_killing_test\",\"score_verified\":true}",
+          "usage": {
+            "input_tokens": 858,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "timeout",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"next_action\":\"run_mutmut\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 853,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "missing-branches",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 856,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "ready-first-attempt",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"run_mutmut\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 859,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "ready-first-attempt",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"run_mutmut\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 859,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "missing-branches",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 856,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "timeout",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"next_action\":\"run_mutmut\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 853,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "valid-survivor",
+          "split": "train",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"write_killing_test\",\"score_verified\":true}",
+          "usage": {
+            "input_tokens": 858,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 20
+          }
+        },
+        {
+          "id": "attempts-exhausted",
+          "split": "train",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 857,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "failed-baseline",
+          "split": "train",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"next_action\":\"report_blocker\",\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 853,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        }
+      ],
+      "gate": {
+        "eligible": false,
+        "regression": true,
+        "gains": {
+          "train": 2,
+          "holdout": -2
+        },
+        "rule": "No paired regression; strict improvement on holdout"
+      }
+    }
+  ],
+  "promoted": false,
+  "candidate_definition": "# Role: mutation tester (builder)\n\nProve that the tests would catch a bug in the new and refactored code.\n\n## You own\n\n`tests/mutation/**` (configuration and a short guide) and `tests/test_config_mutants.py`.\n\n## Do\n\n1. Configure mutation testing (`mutmut` is installed) for the new config module and the refactored value-resolution code only.\n   The sandbox has a bounded memory budget shared with OpenCode. Set explicit `source_paths` (mutmut 3)\n   and restrict the tests used; never mutate the whole package or run the full suite per mutant.\n   Use `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 timeout -k 10s 180s mutmut run --max-children 1`.\n   Do not increase concurrency. Exit 124 means the run timed out: report partial results, not a passing score.\n   Select mutant-name patterns for the refactored functions rather than running every mutant in `core.py`.\n2. Run it against `origin/epic/developer` combined with the tests on `origin/epic/quality`, in a scratch copy at `/tmp/mut`. Do not change `/workspace/repo`.\n   Those builders have finished before you start. Fetch their branches first.\n   If those branches are not there yet, write the configuration and say the run is not verified.\n   Run the combined baseline tests before mutation testing. If they fail, report the failing tests\n   and the mutation gate as unverified. Do not skip, weaken or rewrite those tests to obtain a score.\n   Make at most two mutmut attempts. If setup or coverage collection still fails, record the commands\n   and blocker in the PR and stop; do not patch mutmut, site-packages or Python's import machinery.\n3. List the surviving mutants. For each, either write a test in `tests/test_config_mutants.py` that kills it, or explain why it is equivalent.\n4. Report the mutation score before and after, against the epic gate of 80%.\n\n## Do not\n\n- Edit production code or the quality engineer's test files.\n\n## Done when\n\nThe PR contains the configuration, the guide, the killing tests, and a table of surviving mutants with the reason for each.\n",
+  "candidate_sha256": "5f80da89866250eb2143484d343fcd29f196fc6df9c3b3bf84bb4c122093d84b",
+  "eligible": false,
+  "promotion_requested": true
+}

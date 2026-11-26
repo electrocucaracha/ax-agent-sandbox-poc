@@ -1,0 +1,42 @@
+{
+  "scope": "Independent seed and combined developer/quality pytest suites",
+  "counts_source": "JUnit; collection errors count as cases, not executed tests",
+  "collection_error": {
+    "module": "tests/test_basic.py",
+    "parametrized_test": "test_boolean_conversion",
+    "warning": "PytestRemovedIn10Warning: Passing a non-Collection iterable to parametrize is deprecated.",
+    "pytest_version": "9.2.0",
+    "policy": "warnings as errors",
+    "executed_tests_per_suite": 0,
+    "warning_policy_changed": false
+  },
+  "suites": {
+    "seed": {
+      "exit_code": 2,
+      "seconds": 0.633,
+      "tests": 1,
+      "failed": 0,
+      "errors": 1,
+      "skipped": 0,
+      "passed": 0
+    },
+    "combined": {
+      "exit_code": 2,
+      "seconds": 0.656,
+      "tests": 1,
+      "failed": 0,
+      "errors": 1,
+      "skipped": 0,
+      "passed": 0
+    }
+  },
+  "seed_commit": "6e7dd7a773ead577d9ac40bf74e0270c7af512be",
+  "developer_commit": "189e5a01025a4c60ae5d6c9993171784c1fe72ec",
+  "quality_commit": "066f43c18cb82ed2bb0515d15b5bf008610d6964",
+  "quality_gate_verified": false,
+  "verification_driver_exit_code": 0,
+  "prior_setup_failure": {
+    "exit_code": 1,
+    "reason": "Local workspace clone did not contain origin/main; fixed by explicitly fetching main from the team remote."
+  }
+}

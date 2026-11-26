@@ -6,28 +6,41 @@ import base64
 import datetime
 import json
 import os
-from pathlib import Path
 import re
 import shutil
 import subprocess
-import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
+from pathlib import Path
 
 
 def command(args, **kwargs):
-    return subprocess.run(args, check=True, text=True, capture_output=True, **kwargs).stdout
+    """Return stdout from a successful command, propagating execution errors."""
+    return subprocess.run(
+        args, check=True, text=True, capture_output=True, **kwargs
+    ).stdout
 
 
-def request_usage(endpoint, headers, model, messages):
+def request_usage(endpoint, headers, model, messages, max_tokens=128, system=None):
+    """Request an Anthropic-format answer and validated, separate token counts.
+
+    HTTP failures expose only the status code, not the provider response body.
+    Cache counters may be absent; input and output counters are required.
+    """
+    payload = {
+        "model": model,
+        "max_tokens": max_tokens,
+        "temperature": 0,
+        "messages": messages,
+    }
+    if system is not None:
+        payload["system"] = system
     request = urllib.request.Request(
         endpoint.rstrip("/") + "/messages",
-        data=json.dumps(
-            {"model": model, "max_tokens": 128, "temperature": 0, "messages": messages}
-        ).encode(),
+        data=json.dumps(payload).encode(),
         headers={"content-type": "application/json", **headers},
     )
     try:
@@ -45,8 +58,10 @@ def request_usage(endpoint, headers, model, messages):
             "output_tokens",
         )
     }
-    if "input_tokens" not in usage or "output_tokens" not in usage or any(
-        not isinstance(value, int) or value < 0 for value in counts.values()
+    if (
+        "input_tokens" not in usage
+        or "output_tokens" not in usage
+        or any(not isinstance(value, int) or value < 0 for value in counts.values())
     ):
         raise ValueError("Provider did not return valid token usage")
     answer = "".join(
@@ -56,6 +71,7 @@ def request_usage(endpoint, headers, model, messages):
 
 
 def worker(repetitions):
+    """Measure paired shell-output variants and optionally Headroom in AX."""
     settings = json.loads(os.environ["BENCH_SETTINGS"])
     root = Path("/workspace/token-benchmark")
     root.mkdir()
@@ -150,12 +166,18 @@ def worker(repetitions):
                         "answer": answer,
                     }
                 )
-                Path("/workspace/results.json").write_text(json.dumps(results, indent=2))
+                Path("/workspace/results.json").write_text(
+                    json.dumps(results, indent=2)
+                )
                 print(f"{workload}/{variant}/{repeat}: correct={correct}", flush=True)
     results["headroom"] = settings["headroom"]
     if settings["headroom_status"] == "ready":
         records = [
-            {"id": i, "status": "healthy", "description": "Routine health check succeeded"}
+            {
+                "id": i,
+                "status": "healthy",
+                "description": "Routine health check succeeded",
+            }
             for i in range(100)
         ]
         messages = [
@@ -174,7 +196,9 @@ def worker(repetitions):
                     if variant == "direct"
                     else "https://headroom.default.svc.cluster.local/v1"
                 )
-                counts, answer = request_usage(endpoint, headers, settings["model"], messages)
+                counts, answer = request_usage(
+                    endpoint, headers, settings["model"], messages
+                )
                 results["measurements"].append(
                     {
                         "workload": "headroom-json",
@@ -185,20 +209,31 @@ def worker(repetitions):
                         "answer": answer,
                     }
                 )
-                Path("/workspace/results.json").write_text(json.dumps(results, indent=2))
+                Path("/workspace/results.json").write_text(
+                    json.dumps(results, indent=2)
+                )
                 print(f"headroom-json/{variant}/{repeat}: answer={answer}", flush=True)
     Path("/workspace/results.json").write_text(json.dumps(results, indent=2))
 
 
 def run(args):
+    """Create temporary benchmark resources and remove them after collection."""
     root = Path(__file__).resolve().parent.parent
     loaded = subprocess.run(
-        ["bash", "-c", 'set -a; source "$1"; env -0', "bash", str(root / ".env.opencode")],
+        [
+            "bash",
+            "-c",
+            'set -a; source "$1"; env -0',
+            "bash",
+            str(root / ".env.opencode"),
+        ],
         check=True,
         capture_output=True,
     )
     env = dict(
-        entry.decode().split("=", 1) for entry in loaded.stdout.split(b"\0") if b"=" in entry
+        entry.decode().split("=", 1)
+        for entry in loaded.stdout.split(b"\0")
+        if b"=" in entry
     )
     base = env.get("LITELLM_PROXY_API_BASE") or (
         "https://" + env["LLM_HOST"] + env.get("LLM_PATH", "/v1")
@@ -212,14 +247,20 @@ def run(args):
         or url.query
         or url.fragment
     ):
-        raise ValueError("Expected an HTTPS base URL without credentials, query, or fragment")
+        raise ValueError(
+            "Expected an HTTPS base URL without credentials, query, or fragment"
+        )
     endpoint = base.rstrip("/")
     if not endpoint.endswith("/v1"):
         endpoint += "/v1"
-    model = env.get("LLM_MODEL_ID") or env.get("LITELLM_PROXY_MODEL", "").removeprefix("anthropic/")
+    model = env.get("LLM_MODEL_ID") or env.get("LITELLM_PROXY_MODEL", "").removeprefix(
+        "anthropic/"
+    )
     key = env.get("LITELLM_PROXY_API_KEY") or env.get("LLM_API_KEY")
     if not key or not model:
-        raise ValueError("Configure the local LLM API key and Anthropic model before running")
+        raise ValueError(
+            "Configure the local LLM API key and Anthropic model before running"
+        )
     headers = json.loads(
         env.get("CHANGELOG_LITELLM_HEADERS_JSON")
         or env.get("LLM_EXTRA_HEADERS_JSON")
@@ -237,24 +278,48 @@ def run(args):
     headroom_status = "not requested"
     headroom = {"status": headroom_status}
     if args.headroom:
-        deployment = json.loads(command(["kubectl", "-n", "default", "get", "deploy", "headroom", "-o", "json"]))
+        deployment = json.loads(
+            command(
+                ["kubectl", "-n", "default", "get", "deploy", "headroom", "-o", "json"]
+            )
+        )
         container = deployment["spec"]["template"]["spec"]["containers"][0]
         target = next(
-            (v.get("value", "") for v in container.get("env", []) if v["name"] == "ANTHROPIC_TARGET_API_URL"),
+            (
+                v.get("value", "")
+                for v in container.get("env", [])
+                if v["name"] == "ANTHROPIC_TARGET_API_URL"
+            ),
             "",
         )
-        headroom_status = "ready" if target.rstrip("/") in (endpoint, endpoint[:-3]) else "upstream mismatch; skipped"
+        headroom_status = (
+            "ready"
+            if target.rstrip("/") in (endpoint, endpoint[:-3])
+            else "upstream mismatch; skipped"
+        )
         headroom = {
             "status": headroom_status,
             "mode": next(
-                (v.get("value", "") for v in container.get("env", []) if v["name"] == "HEADROOM_MODE"),
+                (
+                    v.get("value", "")
+                    for v in container.get("env", [])
+                    if v["name"] == "HEADROOM_MODE"
+                ),
                 "default",
             ),
-            "version": command([
-                "kubectl", "-n", "default", "exec", "deploy/headroom", "--",
-                "python", "-c",
-                "from importlib.metadata import version; print(version('headroom-ai'))",
-            ]).strip(),
+            "version": command(
+                [
+                    "kubectl",
+                    "-n",
+                    "default",
+                    "exec",
+                    "deploy/headroom",
+                    "--",
+                    "python",
+                    "-c",
+                    "from importlib.metadata import version; print(version('headroom-ai'))",
+                ]
+            ).strip(),
         }
     settings = {
         "endpoint": endpoint,
@@ -267,35 +332,57 @@ def run(args):
     secret = {
         "apiVersion": "v1",
         "kind": "Secret",
-        "metadata": {"name": name, "namespace": "default", "labels": {"ax.io/credential": "true"}},
+        "metadata": {
+            "name": name,
+            "namespace": "default",
+            "labels": {"ax.io/credential": "true"},
+        },
         "stringData": {"api-key": key},
     }
     hostnames = [url.netloc]
     if headroom_status == "ready":
         hostnames.append("headroom.default.svc.cluster.local")
     gateway = {
-        "apiVersion": "ax.io/v1alpha1", "kind": "Gateway",
+        "apiVersion": "ax.io/v1alpha1",
+        "kind": "Gateway",
         "metadata": {"name": name, "atespace": "default"},
-        "spec": {"egress": [{"https": {
-            "hostnames": hostnames,
-            "effects": {"replaceHeaders": [{
-                "header": "x-api-key",
-                "credentialUri": f"ate-secret://k8s.io/default/default/{name}/api-key",
-            }]},
-        }}]},
+        "spec": {
+            "egress": [
+                {
+                    "https": {
+                        "hostnames": hostnames,
+                        "effects": {
+                            "replaceHeaders": [
+                                {
+                                    "header": "x-api-key",
+                                    "credentialUri": f"ate-secret://k8s.io/default/default/{name}/api-key",
+                                }
+                            ]
+                        },
+                    }
+                }
+            ]
+        },
     }
     workspace = {
-        "apiVersion": "ax.io/v1alpha1", "kind": "Workspace",
+        "apiVersion": "ax.io/v1alpha1",
+        "kind": "Workspace",
         "metadata": {"name": name, "atespace": "default"},
         "spec": {"profile": {"image": env["OPENCODE_IMAGE"]}},
     }
     encoded = base64.b64encode(Path(__file__).read_bytes()).decode()
     task = {
-        "apiVersion": "ax.io/v1alpha1", "kind": "Task",
+        "apiVersion": "ax.io/v1alpha1",
+        "kind": "Task",
         "metadata": {"name": name, "atespace": "default"},
         "spec": {
-            "workspace": {"name": name}, "gateway": {"name": name},
-            "commands": ["sh", "-c", f"mkdir -p /workspace; echo {encoded} | base64 -d > /workspace/benchmark.py; python3 /workspace/benchmark.py --worker --repetitions {args.repetitions} > /workspace/benchmark.log 2>&1; echo $? > /workspace/benchmark.exit; sleep 1800"],
+            "workspace": {"name": name},
+            "gateway": {"name": name},
+            "commands": [
+                "sh",
+                "-c",
+                f"mkdir -p /workspace; echo {encoded} | base64 -d > /workspace/benchmark.py; python3 /workspace/benchmark.py --worker --repetitions {args.repetitions} > /workspace/benchmark.log 2>&1; echo $? > /workspace/benchmark.exit; sleep 1800",
+            ],
             "env": [{"name": "BENCH_SETTINGS", "value": json.dumps(settings)}],
             "debug": True,
         },
@@ -323,21 +410,34 @@ def run(args):
         while time.monotonic() < deadline:
             check = subprocess.run(
                 [ax, "ssh", name, "--", "cat", "/workspace/benchmark.exit"],
-                text=True, capture_output=True,
+                text=True,
+                capture_output=True,
             )
             if check.returncode == 0:
                 if check.stdout.strip() != "0":
-                    log = command([ax, "ssh", name, "--", "cat", "/workspace/benchmark.log"])
+                    log = command(
+                        [ax, "ssh", name, "--", "cat", "/workspace/benchmark.log"]
+                    )
                     args.output.with_suffix(".log").write_text(log)
-                    raise RuntimeError(f"Benchmark failed; diagnostics saved beside {args.output}")
-                output = command([ax, "ssh", name, "--", "cat", "/workspace/results.json"])
+                    raise RuntimeError(
+                        f"Benchmark failed; diagnostics saved beside {args.output}"
+                    )
+                output = command(
+                    [ax, "ssh", name, "--", "cat", "/workspace/results.json"]
+                )
                 args.output.write_text(output)
                 results = json.loads(output)
-                print(f"Saved {len(results['measurements'])} measurements to {args.output}")
-                print(f"Correct answers: {sum(m['correct'] for m in results['measurements'])}/{len(results['measurements'])}")
+                print(
+                    f"Saved {len(results['measurements'])} measurements to {args.output}"
+                )
+                print(
+                    f"Correct answers: {sum(m['correct'] for m in results['measurements'])}/{len(results['measurements'])}"
+                )
                 print(f"Headroom: {results['headroom']['status']}")
                 if not all(m["correct"] for m in results["measurements"]):
-                    raise RuntimeError("Answer validation failed; do not treat these results as successful savings")
+                    raise RuntimeError(
+                        "Answer validation failed; do not treat these results as successful savings"
+                    )
                 return
             states = command([ax, "get", "tasks"]).splitlines()
             if any(row.split()[:3] == [name, "default", "Failed"] for row in states):
@@ -350,7 +450,9 @@ def run(args):
             if subprocess.run(cleanup, capture_output=True).returncode:
                 failed_cleanup.append(cleanup[-2])
         if failed_cleanup:
-            raise RuntimeError(f"Cleanup failed for {name}: {', '.join(failed_cleanup)}")
+            raise RuntimeError(
+                f"Cleanup failed for {name}: {', '.join(failed_cleanup)}"
+            )
 
 
 if __name__ == "__main__":

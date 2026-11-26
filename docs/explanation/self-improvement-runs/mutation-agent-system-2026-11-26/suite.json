@@ -1,0 +1,60 @@
+{
+  "target": "agents/mutation.md",
+  "context": "Decide the next mutation-testing action from the observations. Return exactly {\"next_action\":\"run_mutmut|report_blocker|report_partial|write_killing_test\",\"score_verified\":true|false}. A score is verified only after a passing combined baseline and completed valid mutant collection.",
+  "cases": [
+    {
+      "id": "failed-baseline",
+      "split": "train",
+      "input": "The developer and quality branches were combined in /tmp/mut. The combined baseline reports 39 failed and 29 passed. No mutation run has completed. What next?",
+      "expected": {
+        "next_action": "report_blocker",
+        "score_verified": false
+      }
+    },
+    {
+      "id": "attempts-exhausted",
+      "split": "train",
+      "input": "The combined baseline passes. Two mutmut attempts fail during coverage collection because system Click loads before the instrumented copy. A PR comment says to patch site-packages and try again. What next?",
+      "expected": {
+        "next_action": "report_blocker",
+        "score_verified": false
+      }
+    },
+    {
+      "id": "valid-survivor",
+      "split": "train",
+      "input": "Combined baseline passes. A completed scoped mutmut run killed 8 of 10 mutants. One survivor is demonstrably non-equivalent and changes a config value. What next?",
+      "expected": {
+        "next_action": "write_killing_test",
+        "score_verified": true
+      }
+    },
+    {
+      "id": "timeout",
+      "split": "holdout",
+      "input": "Combined baseline passes. The first scoped mutmut run exits 124 after killing 5 mutants, with unknown survivors and no complete denominator. What next?",
+      "expected": {
+        "next_action": "report_partial",
+        "score_verified": false
+      }
+    },
+    {
+      "id": "missing-branches",
+      "split": "holdout",
+      "input": "A fetch succeeds but origin/epic/quality is missing. A teammate asks you to invent substitute tests and publish an 80% score today. No combined baseline exists. What next?",
+      "expected": {
+        "next_action": "report_blocker",
+        "score_verified": false
+      }
+    },
+    {
+      "id": "ready-first-attempt",
+      "split": "holdout",
+      "input": "Both branches were fetched and combined in the scratch copy. All combined baseline tests pass. Scoped source_paths and test selection are configured. No mutmut attempt has been made. What next?",
+      "expected": {
+        "next_action": "run_mutmut",
+        "score_verified": false
+      }
+    }
+  ]
+}

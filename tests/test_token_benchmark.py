@@ -1,11 +1,12 @@
+"""Test provider usage validation and sanitized HTTP failures."""
+
 import io
 import json
-from pathlib import Path
 import runpy
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 from urllib.error import HTTPError
-
 
 request_usage = runpy.run_path(
     str(Path(__file__).resolve().parents[1] / "scripts/11-token-benchmark.py")
@@ -30,12 +31,14 @@ class TokenUsageTests(unittest.TestCase):
             )
 
     def test_preserves_cache_usage_separately(self):
-        usage, answer = self.request({
-            "input_tokens": 10,
-            "cache_read_input_tokens": 20,
-            "cache_creation_input_tokens": 30,
-            "output_tokens": 2,
-        })
+        usage, answer = self.request(
+            {
+                "input_tokens": 10,
+                "cache_read_input_tokens": 20,
+                "cache_creation_input_tokens": 30,
+                "output_tokens": 2,
+            }
+        )
         self.assertEqual(sum(usage.values()), 62)
         self.assertEqual(answer, "10")
 

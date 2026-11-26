@@ -1,0 +1,45 @@
+{
+  "target": "skills/evidence/SKILL.md",
+  "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}.",
+  "cases": [
+    {
+      "id": "fresh-bounded-boundary",
+      "split": "holdout",
+      "input": "An evaluator attempted one cross-tenant repository clone in a live sandbox, captured phase Failed, and asserted that phase. The claim is: this one attempted cross-tenant clone was refused. No claim is made about every possible tenant or route.",
+      "expected": { "claim_verified": true, "classification": "verified" }
+    },
+    {
+      "id": "fresh-bounded-persistence",
+      "split": "holdout",
+      "input": "The evaluator wrote marker value 7319, suspended the sandbox, resumed it, read back 7319, and asserted exact equality. The claim is: this marker survived this suspend/resume cycle.",
+      "expected": { "claim_verified": true, "classification": "verified" }
+    },
+    {
+      "id": "fresh-agent-reported",
+      "split": "holdout",
+      "input": "A reviewer agent's PR says a benchmark measured 11 ms import time. No evaluator has collected its command output or rerun it. The claim is: 11 ms was independently verified.",
+      "expected": {
+        "claim_verified": false,
+        "classification": "agent_reported"
+      }
+    },
+    {
+      "id": "fresh-extrapolation",
+      "split": "holdout",
+      "input": "Four synthetic command-output compression requests saved 52% input tokens. The claim is: the production coding workflow now uses 52% fewer total tokens end to end.",
+      "expected": { "claim_verified": false, "classification": "unverified" }
+    },
+    {
+      "id": "fresh-captured-assertions",
+      "split": "holdout",
+      "input": "The independent runner captured exit 0 and 7 exact-answer assertions passing on a specified small workload. The claim is: those 7 assertions passed in that run, without any broader quality claim.",
+      "expected": { "claim_verified": true, "classification": "verified" }
+    },
+    {
+      "id": "fresh-recovered-not-unattended",
+      "split": "holdout",
+      "input": "A run failed during a test stage. An operator changed its timeout and resumed it successfully. The claim is: the original command succeeded unattended without intervention.",
+      "expected": { "claim_verified": false, "classification": "unverified" }
+    }
+  ]
+}

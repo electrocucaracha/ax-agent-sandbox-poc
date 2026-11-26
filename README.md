@@ -57,19 +57,20 @@ flowchart TB
 
 ## What is included
 
-| Capability                                                            | Status                                                                        |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Task runs in a gVisor sandbox on kind                                 | Verified                                                                      |
-| Custom agent image from a local registry                              | Verified                                                                      |
-| Real API key injected at egress, sandbox sees only a placeholder      | Verified (mock and real gateway)                                              |
-| Hosts outside the Gateway allowlist are refused                       | Verified                                                                      |
-| `/workspace` state survives suspend and resume                        | Verified                                                                      |
-| OpenCode completes prompts through the injected key                   | Verified                                                                      |
-| Token-saving tools (rtk, Headroom, Engram, Graphify)                  | Verified to run; savings vary by workload                                     |
-| Several agents running concurrently on the shared pool                | Verified with a real provider; full workflow recovered after a mutation retry |
-| Tenant separation across atespaces (separate keys, credential policy) | Verified (2 atespaces)                                                        |
-| Long-running sessions on large repositories                           | Not tested                                                                    |
-| Memory shared across tasks                                            | Not tested                                                                    |
+| Capability                                                            | Status                                                                                  |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Task runs in a gVisor sandbox on kind                                 | Verified                                                                                |
+| Custom agent image from a local registry                              | Verified                                                                                |
+| Real API key injected at egress, sandbox sees only a placeholder      | Verified (mock and real gateway)                                                        |
+| Hosts outside the Gateway allowlist are refused                       | Verified                                                                                |
+| `/workspace` state survives suspend and resume                        | Verified                                                                                |
+| OpenCode completes prompts through the injected key                   | Verified                                                                                |
+| Token-saving tools (rtk, Headroom, Engram, Graphify)                  | Verified to run; savings vary by workload                                               |
+| Several agents running concurrently on the shared pool                | Verified with a real provider; full workflow recovered after a mutation retry           |
+| Tenant separation across atespaces (separate keys, credential policy) | Verified (2 atespaces)                                                                  |
+| Long-running sessions on large repositories                           | Not tested                                                                              |
+| Memory shared across tasks                                            | Not tested                                                                              |
+| Evaluation-gated agent/skill/tool-use instruction updates             | Verified on three bounded decision suites; one skill promoted and OpenCode smoke passed |
 
 The [real-provider team run](docs/how-to/run-team-demo.md#real-provider-recovered-run-2026-11-25)
 completed all stages after a targeted mutation retry, including reviewers and isolation checks.
@@ -117,6 +118,51 @@ all 18 answer checks passed. They measure bounded context compression, not whole
 Savings depend on the workload.
 Read the [findings](docs/explanation/token-saving-findings.md) before you adopt one.
 
+## Self-improving definitions
+
+The [self-improvement loop](docs/how-to/self-improve-agent-definitions.md)
+reflects on training failures, evaluates additive instruction changes on frozen
+holdout scenarios, and promotes only improvements without paired regressions.
+It runs in AX sandboxes and updates role, skill and tool-use Markdown definitions
+only with explicit opt-in.
+
+The first admitted evidence skill improved from 8/12 to 10/12 exact answers;
+a regressing role change and a no-gain tool change were rejected.
+See the [measured findings](docs/explanation/self-improvement-findings.md) and
+[369-entry resource review](docs/explanation/self-improvement-catalog.md).
+This is instruction-layer optimization, not model training or proven
+end-to-end coding improvement.
+
+## Python development
+
+Use Python 3.10 or newer and an isolated development environment:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+make format-python
+make check-python
+```
+
+Black formats code, isort orders imports using Black's profile, and Ruff checks
+Python errors, modern syntax and Google-style docstrings.
+All three use an 88-character formatting width.
+Test methods use descriptive names rather than mandatory docstrings.
+`make check-python` runs these checks and the existing unittest suite, including
+doctest examples from script docstrings.
+Those examples exercise pure decision and metric helpers without contacting a
+cluster, model provider or git server.
+The same checks run in GitHub Actions.
+
+Run only tests without development dependencies:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+Historical run receipts retain their original hashes; formatting and docstring
+changes affect the provenance hashes of future runs only.
+
 ## Documentation
 
 | Section     | Pages                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -132,6 +178,9 @@ Read the [findings](docs/explanation/token-saving-findings.md) before you adopt 
 scripts/     numbered setup and run scripts
 resources/   Kubernetes and AX YAML as kustomizations (mock-llm, git-server, headroom, team, task)
 agents/      agent definitions: the epic, team rules, one file per role, ci-check
+skills/      reusable instruction skills consumed by the team runner
+tools/       tool-use contracts (not new executables)
+evaluations/ frozen optimization suites and validation-only replay cases
 image/       Dockerfile (one file, all agent tools) and agent configs
 docs/        tutorials, how-to guides, reference, explanation
 ```

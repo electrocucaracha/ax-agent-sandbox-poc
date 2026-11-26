@@ -205,6 +205,15 @@ start_agents() { # wave
         file="$HERE/agents/${spec#script:}.sh"
         RUNNER=script ;;
     esac
+    if [ "$RUNNER" = prompt ]; then
+      src=$file
+      file=$(mktemp)
+      cat "$src" "$HERE/skills/evidence/SKILL.md" > "$file"
+      if [ "$role" = mutation ]; then
+        cat "$HERE/tools/mutmut.md" >> "$file"
+      fi
+      [[ "$src" == "$HERE/agents/"* ]] || rm -f "$src"
+    fi
     # base64 keeps the multi-line prompt out of the YAML quoting; the task decodes it inside the sandbox
     PROMPT_B64=$(base64 < "$file" | tr -d '\n')
     TASK_PROFILE='{}'
@@ -212,6 +221,7 @@ start_agents() { # wave
       TASK_PROFILE=$(python3 -c 'import json,sys; print(json.dumps({"image": sys.argv[1], "resources": {"limits": {"memory": sys.argv[2]}}}))' "$OPENCODE_IMAGE" "$MUTATION_MEMORY")
     fi
     TENANT=$t TASK=$role WS=$t-app RUNNER=$RUNNER PROMPT_B64=$PROMPT_B64 TASK_PROFILE=$TASK_PROFILE EXTRA_HEADERS_B64=$EXTRA_HEADERS_B64 AUTH_MODE=$LLM_AUTH_MODE render resources/task '${TENANT} ${TASK} ${WS} ${RUNNER} ${PROMPT_B64} ${TASK_PROFILE} ${LLM_HOST} ${LLM_PATH} ${LLM_MODEL_ID} ${EXTRA_HEADERS_B64} ${AUTH_MODE} ${OC_CONFIG} ${HOLD_SECONDS}' | ax apply -f - >/dev/null
+    [ "$RUNNER" = script ] || rm -f "$file"
     ax -a "$t" resume task "$role" >/dev/null &
   done
   wait

@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-26T04:06:20.523426+00:00",
+  "target": "skills/evidence/SKILL.md",
+  "original_sha256": "d7d7b43f4d2334f3a16e029b1746fb718144370a52706ea7f4b7cb8b8677028c",
+  "suite_sha256": "6d59683c1da51d2fbc877461c25b63f041484b7af2dcbf185beb14360da00988",
+  "model": "claude-sonnet-4-6",
+  "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+  "repetitions": 2,
+  "evaluation_scope": "LLM structured decisions, not tool execution or full coding tasks",
+  "iterations": [
+    {
+      "iteration": 1,
+      "baseline": [
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 228,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 231,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":true,\"classification\":\"verified\"}\n```",
+          "usage": {
+            "input_tokens": 241,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\": false, \"classification\": \"partial\"}\n```",
+          "usage": {
+            "input_tokens": 230,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\": false, \"classification\": \"partial\"}\n```",
+          "usage": {
+            "input_tokens": 230,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":true,\"classification\":\"verified\"}\n```",
+          "usage": {
+            "input_tokens": 241,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 231,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 228,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        }
+      ],
+      "proposer_usage": {
+        "input_tokens": 677,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 465
+      },
+      "proposer_answer": "Looking at the training feedback, I can identify the pattern of errors:\n\n1. **`synthetic-to-agent`**: Both attempts returned `\"unverified\"` which matched expected \u2014 but wait, both are marked `correct: false`. The expected is also `\"unverified\"`. This is contradictory... unless the issue is that the definition needs to clarify that a synthetic benchmark extrapolated to a real-world team claim should be `\"unverified\"` (not `\"agent_reported\"`), and the answers were actually correct but something else is wrong. Re-reading: both answers match expected and are marked `correct: false` \u2014 this suggests the grading may require exact format without code fences. But that's a format issue, not a definition issue.\n\n2. **`reported-tests`**: Both attempts returned `\"unverified\"` but expected `\"agent_reported\"`. The definition needs to clarify the distinction: when a claim originates from an agent's self-report (not independently verified), classify it as `agent_reported`, not merely `unverified`.\n\n3. **`completed-assertions`**: Both correct \u2014 no issue.\n\nThe key gap is: the definition doesn't explain when to use `agent_reported` vs `unverified`. I need to add a clarification distinguishing these two classifications.\n\n```json\n{\n  \"addition\": \"Classification guidance: use \\\"agent_reported\\\" when the claim originates from an agent's own statement, PR text, log entry, or self-assessment and has not been independently checked\u2014even if the underlying action may have occurred. Use \\\"unverified\\\" when the claim cannot be traced to any direct observation or independent measurement, including cases where a synthetic or proxy benchmark is extrapolated to a broader real-world claim. Do not use \\\"unverified\\\" in place of \\\"agent_reported\\\" simply because independent confirmation is absent; the origin of the claim determines which label applies. A claim is \\\"verified\\\" only when an independent observer captured the exit status and all relevant assertions directly, and the claim matches exactly what those observations establish\u2014not a broader generalization.\"\n}\n```",
+      "rejection": "Proposer returned invalid JSON"
+    },
+    {
+      "iteration": 2,
+      "baseline": [
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 228,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 231,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":true,\"classification\":\"verified\"}\n```",
+          "usage": {
+            "input_tokens": 241,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\": false, \"classification\": \"partial\"}\n```",
+          "usage": {
+            "input_tokens": 230,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\": false, \"classification\": \"partial\"}\n```",
+          "usage": {
+            "input_tokens": 230,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":true,\"classification\":\"verified\"}\n```",
+          "usage": {
+            "input_tokens": 241,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 19
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 231,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 227,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        },
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 2,
+          "correct": false,
+          "answer": "```json\n{\"claim_verified\":false,\"classification\":\"unverified\"}\n```",
+          "usage": {
+            "input_tokens": 228,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 21
+          }
+        }
+      ],
+      "proposer_usage": {
+        "input_tokens": 677,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 465
+      },
+      "proposer_answer": "Looking at the training feedback, I can identify the pattern of errors:\n\n1. **`synthetic-to-agent`**: Both attempts returned `\"unverified\"` which matched expected \u2014 but wait, both are marked `correct: false`. The expected is also `\"unverified\"`. This is contradictory... unless the issue is that the definition needs to clarify that a synthetic benchmark extrapolated to a real-world team claim should be `\"unverified\"` (not `\"agent_reported\"`), and the answers were actually correct but something else is wrong. Re-reading: both answers match expected and are marked `correct: false` \u2014 this suggests the grading may require exact format without code fences. But that's a format issue, not a definition issue.\n\n2. **`reported-tests`**: Both attempts returned `\"unverified\"` but expected `\"agent_reported\"`. The definition needs to clarify the distinction: when a claim originates from an agent's self-report (not independently verified), classify it as `agent_reported`, not merely `unverified`.\n\n3. **`completed-assertions`**: Both correct \u2014 no issue.\n\nThe key gap is: the definition doesn't explain when to use `agent_reported` vs `unverified`. I need to add a clarification distinguishing these two classifications.\n\n```json\n{\n  \"addition\": \"Classification guidance: use \\\"agent_reported\\\" when the claim originates from an agent's own statement, PR text, log entry, or self-assessment and has not been independently checked\u2014even if the underlying action may have occurred. Use \\\"unverified\\\" when the claim cannot be traced to any direct observation or independent measurement, including cases where a synthetic or proxy benchmark is extrapolated to a broader real-world claim. Do not use \\\"unverified\\\" in place of \\\"agent_reported\\\" simply because independent confirmation is absent; the origin of the claim determines which label applies. A claim is \\\"verified\\\" only when an independent observer captured the exit status and all relevant assertions directly, and the claim matches exactly what those observations establish\u2014not a broader generalization.\"\n}\n```",
+      "rejection": "Proposer returned invalid JSON"
+    }
+  ],
+  "promoted": false,
+  "candidate_definition": "# Evidence-based reporting\n\nSeparate command completion from verified task success. Report what the observed\nexit status and assertions actually establish, including the workload and sample\nsize. A timeout, missing measurement, or failed prerequisite is not a passing\nquality gate. Label agent-reported results as such until independently checked.\nDo not substitute a synthetic benchmark for an end-to-end result.\n\nNever weaken tests to improve a score. Preserve failed attempts and blockers in\nthe report. Do not put credentials or private endpoint details in evidence.\n",
+  "candidate_sha256": "d7d7b43f4d2334f3a16e029b1746fb718144370a52706ea7f4b7cb8b8677028c",
+  "eligible": false,
+  "promotion_requested": false
+}

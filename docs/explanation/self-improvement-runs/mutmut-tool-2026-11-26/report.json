@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-26T04:05:15.932848+00:00",
+  "target": "tools/mutmut.md",
+  "original_sha256": "b6bd5260740ea31ecd9ac15f2648fa4e8c551619bcc12ee205d8d5f60880a267",
+  "suite_sha256": "470d0cc307859f74547a74ac4f8c530f45467f443f66f03e32a987095d42df27",
+  "model": "claude-sonnet-4-6",
+  "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+  "repetitions": 2,
+  "evaluation_scope": "LLM structured decisions, not tool execution or full coding tasks",
+  "iterations": [
+    {
+      "iteration": 1,
+      "baseline": [
+        {
+          "id": "scoped-ready",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 289,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "broken-baseline",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 291,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "coverage-failed-twice",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 296,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "first-setup-retry",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 300,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "timeout-is-not-score",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 298,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "measured-complete",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":true}",
+          "usage": {
+            "input_tokens": 303,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "measured-complete",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":true}",
+          "usage": {
+            "input_tokens": 303,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "timeout-is-not-score",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 298,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "first-setup-retry",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 300,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "coverage-failed-twice",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 296,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "broken-baseline",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 291,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "scoped-ready",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 289,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        }
+      ],
+      "proposer_usage": {
+        "input_tokens": 800,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 316
+      },
+      "rejection": "Proposer returned invalid JSON"
+    }
+  ],
+  "promoted": false,
+  "candidate_definition": "# Tool contract: mutmut\n\nThis describes the installed mutation-testing tool, not a new executable.\n\nUse mutmut only after the combined production and test branches pass their\nbaseline tests. Scope `source_paths` and the selected tests to the changed code.\nRun at most two attempts, serially:\n\n```sh\nPYTEST_DISABLE_PLUGIN_AUTOLOAD=1 timeout -k 10s 180s mutmut run --max-children 1\n```\n\nExit 124 means timeout, not a passing score. A failed import or coverage setup\ndoes not produce a verified score. Do not modify mutmut, site-packages, or the\nimport machinery to force a measurement. Report the blocker and stop after two\nattempts. A verified score requires measured killed and surviving mutants.\n",
+  "candidate_sha256": "b6bd5260740ea31ecd9ac15f2648fa4e8c551619bcc12ee205d8d5f60880a267",
+  "eligible": false,
+  "promotion_requested": false
+}

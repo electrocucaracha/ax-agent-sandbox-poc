@@ -1,0 +1,9 @@
+{
+  "name": "evidence-replay-706e2f1b0dce",
+  "complete": true,
+  "failures": [],
+  "collected": {
+    "report.json": true,
+    "replay.log": true
+  }
+}

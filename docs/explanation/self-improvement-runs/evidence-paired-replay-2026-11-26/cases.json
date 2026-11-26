@@ -1,0 +1,134 @@
+[
+  {
+    "id": "synthetic-to-agent",
+    "split": "train",
+    "input": "A synthetic JSON compression benchmark saved 69.4% input tokens in three requests. The claim is: our full coding team now uses 69.4% fewer tokens.",
+    "expected": {
+      "claim_verified": false,
+      "classification": "unverified"
+    },
+    "dataset": "historical",
+    "context": "Classify the supplied claim using exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}. Decide the exact claim, not a weaker proxy."
+  },
+  {
+    "id": "reported-tests",
+    "split": "train",
+    "input": "An agent's PR text says 78 tests passed. Nobody collected the runner output or independently checked it. The claim is: 78 tests independently verified passing.",
+    "expected": {
+      "claim_verified": false,
+      "classification": "agent_reported"
+    },
+    "dataset": "historical",
+    "context": "Classify the supplied claim using exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}. Decide the exact claim, not a weaker proxy."
+  },
+  {
+    "id": "completed-assertions",
+    "split": "train",
+    "input": "The evaluator captured exit 0 and all 18 exact answer assertions passed. The claim is: these 18 answer checks passed in this bounded benchmark.",
+    "expected": {
+      "claim_verified": true,
+      "classification": "verified"
+    },
+    "dataset": "historical",
+    "context": "Classify the supplied claim using exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}. Decide the exact claim, not a weaker proxy."
+  },
+  {
+    "id": "unattended-recovery",
+    "split": "holdout",
+    "input": "The first orchestrator run failed at mutation. A human retried that stage and resumed reviewers successfully. The claim is: a clean unattended end-to-end run succeeded.",
+    "expected": {
+      "claim_verified": false,
+      "classification": "unverified"
+    },
+    "dataset": "historical",
+    "context": "Classify the supplied claim using exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}. Decide the exact claim, not a weaker proxy."
+  },
+  {
+    "id": "interrupted-score",
+    "split": "holdout",
+    "input": "A timed mutation run killed 20 mutants before exit 124; the total mutant count is unknown. The claim is: partial progress of 20 killed mutants was observed, but a complete score is unavailable.",
+    "expected": {
+      "claim_verified": true,
+      "classification": "partial"
+    },
+    "dataset": "historical",
+    "context": "Classify the supplied claim using exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}. Decide the exact claim, not a weaker proxy."
+  },
+  {
+    "id": "measured-isolation",
+    "split": "holdout",
+    "input": "A cross-tenant clone was attempted in an actual sandbox and the evaluator asserted the resulting workspace phase was Failed. The claim is: this particular cross-tenant clone was refused.",
+    "expected": {
+      "claim_verified": true,
+      "classification": "verified"
+    },
+    "dataset": "historical",
+    "context": "Classify the supplied claim using exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}. Decide the exact claim, not a weaker proxy."
+  },
+  {
+    "id": "fresh-bounded-boundary",
+    "split": "holdout",
+    "input": "An evaluator attempted one cross-tenant repository clone in a live sandbox, captured phase Failed, and asserted that phase. The claim is: this one attempted cross-tenant clone was refused. No claim is made about every possible tenant or route.",
+    "expected": {
+      "claim_verified": true,
+      "classification": "verified"
+    },
+    "dataset": "fresh",
+    "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}."
+  },
+  {
+    "id": "fresh-bounded-persistence",
+    "split": "holdout",
+    "input": "The evaluator wrote marker value 7319, suspended the sandbox, resumed it, read back 7319, and asserted exact equality. The claim is: this marker survived this suspend/resume cycle.",
+    "expected": {
+      "claim_verified": true,
+      "classification": "verified"
+    },
+    "dataset": "fresh",
+    "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}."
+  },
+  {
+    "id": "fresh-agent-reported",
+    "split": "holdout",
+    "input": "A reviewer agent's PR says a benchmark measured 11 ms import time. No evaluator has collected its command output or rerun it. The claim is: 11 ms was independently verified.",
+    "expected": {
+      "claim_verified": false,
+      "classification": "agent_reported"
+    },
+    "dataset": "fresh",
+    "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}."
+  },
+  {
+    "id": "fresh-extrapolation",
+    "split": "holdout",
+    "input": "Four synthetic command-output compression requests saved 52% input tokens. The claim is: the production coding workflow now uses 52% fewer total tokens end to end.",
+    "expected": {
+      "claim_verified": false,
+      "classification": "unverified"
+    },
+    "dataset": "fresh",
+    "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}."
+  },
+  {
+    "id": "fresh-captured-assertions",
+    "split": "holdout",
+    "input": "The independent runner captured exit 0 and 7 exact-answer assertions passing on a specified small workload. The claim is: those 7 assertions passed in that run, without any broader quality claim.",
+    "expected": {
+      "claim_verified": true,
+      "classification": "verified"
+    },
+    "dataset": "fresh",
+    "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}."
+  },
+  {
+    "id": "fresh-recovered-not-unattended",
+    "split": "holdout",
+    "input": "A run failed during a test stage. An operator changed its timeout and resumed it successfully. The claim is: the original command succeeded unattended without intervention.",
+    "expected": {
+      "claim_verified": false,
+      "classification": "unverified"
+    },
+    "dataset": "fresh",
+    "context": "Classify only the exact claim supplied. Return exactly {\"claim_verified\":true|false,\"classification\":\"verified|partial|unverified|agent_reported\"}."
+  }
+]

@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-26T04:07:47.547281+00:00",
+  "target": "skills/evidence/SKILL.md",
+  "original_sha256": "d7d7b43f4d2334f3a16e029b1746fb718144370a52706ea7f4b7cb8b8677028c",
+  "suite_sha256": "6d59683c1da51d2fbc877461c25b63f041484b7af2dcbf185beb14360da00988",
+  "model": "claude-sonnet-4-6",
+  "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+  "repetitions": 2,
+  "evaluation_scope": "LLM structured decisions, not tool execution or full coding tasks",
+  "iterations": [
+    {
+      "iteration": 1,
+      "baseline": [
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 249,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"agent_reported\"}",
+          "usage": {
+            "input_tokens": 248,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 248,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 252,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 262,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"claim_verified\":false,\"classification\":\"partial\"}",
+          "usage": {
+            "input_tokens": 251,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"claim_verified\":false,\"classification\":\"partial\"}",
+          "usage": {
+            "input_tokens": 251,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 262,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 252,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 248,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"agent_reported\"}",
+          "usage": {
+            "input_tokens": 248,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 249,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        }
+      ],
+      "proposer_usage": {
+        "input_tokens": 688,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 137
+      },
+      "proposer_answer": "{\"addition\":\"Classification rules: (1) verified \u2013 the evaluator directly captured exit status and all assertions for the exact claim scope; (2) partial \u2013 some but not all evidence is independently captured, or the claim scope exceeds what was measured; (3) agent_reported \u2013 results come solely from agent or PR text with no independent capture; (4) unverified \u2013 evidence is from a synthetic proxy, a different population, or is otherwise disconnected from the exact claim. Apply the classification to the exact claim as stated, not a narrower or weaker proxy. A synthetic benchmark result never verifies a production or team-wide claim.\"}",
+      "addition": "Classification rules: (1) verified \u2013 the evaluator directly captured exit status and all assertions for the exact claim scope; (2) partial \u2013 some but not all evidence is independently captured, or the claim scope exceeds what was measured; (3) agent_reported \u2013 results come solely from agent or PR text with no independent capture; (4) unverified \u2013 evidence is from a synthetic proxy, a different population, or is otherwise disconnected from the exact claim. Apply the classification to the exact claim as stated, not a narrower or weaker proxy. A synthetic benchmark result never verifies a production or team-wide claim.",
+      "candidate": [
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 380,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"agent_reported\"}",
+          "usage": {
+            "input_tokens": 379,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 379,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 383,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 393,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 382,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "measured-isolation",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 382,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "interrupted-score",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": false,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 393,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "unattended-recovery",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 383,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "completed-assertions",
+          "split": "train",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":true,\"classification\":\"verified\"}",
+          "usage": {
+            "input_tokens": 379,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 14
+          }
+        },
+        {
+          "id": "reported-tests",
+          "split": "train",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"agent_reported\"}",
+          "usage": {
+            "input_tokens": 379,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        },
+        {
+          "id": "synthetic-to-agent",
+          "split": "train",
+          "repeat": 2,
+          "variant": "candidate",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+          "usage": {
+            "input_tokens": 380,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 16
+          }
+        }
+      ],
+      "gate": {
+        "eligible": false,
+        "regression": false,
+        "gains": {
+          "train": 0,
+          "holdout": 2
+        },
+        "rule": "No paired regression; strict improvement on both train and holdout"
+      }
+    }
+  ],
+  "promoted": false,
+  "candidate_definition": "# Evidence-based reporting\n\nSeparate command completion from verified task success. Report what the observed\nexit status and assertions actually establish, including the workload and sample\nsize. A timeout, missing measurement, or failed prerequisite is not a passing\nquality gate. Label agent-reported results as such until independently checked.\nDo not substitute a synthetic benchmark for an end-to-end result.\n\nNever weaken tests to improve a score. Preserve failed attempts and blockers in\nthe report. Do not put credentials or private endpoint details in evidence.\n",
+  "candidate_sha256": "d7d7b43f4d2334f3a16e029b1746fb718144370a52706ea7f4b7cb8b8677028c",
+  "eligible": false,
+  "promotion_requested": true
+}

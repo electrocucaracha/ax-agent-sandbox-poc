@@ -1,0 +1,153 @@
+{
+  "started_at": "2026-11-26T04:36:09.211132+00:00",
+  "status": "failed",
+  "reset_authorized": true,
+  "worker_replicas_before": 1,
+  "worker_replicas_requested": 8,
+  "command": "WORKERS=8 EPIC_TIMEOUT=1800 MUTATION_TIMEOUT=3600 bash scripts/10-team-demo.sh",
+  "stages": [
+    {
+      "label": "== Wave 0: triage-lead breaks the epic into role issues (ci-check and beta triage run alongside)",
+      "elapsed_seconds": 19.948
+    },
+    {
+      "label": "== Wave 1: builders work in parallel, one per issue",
+      "elapsed_seconds": 271.124
+    },
+    {
+      "label": "== Wave 2: mutation checks the implementation and test branches",
+      "elapsed_seconds": 669.267
+    },
+    {
+      "label": "== Wave 3: reviewers read the pull requests",
+      "elapsed_seconds": 2956.108
+    }
+  ],
+  "token_stats_source": "OpenCode stats CLI; displayed counts may be rounded",
+  "role_tokens": {
+    "alpha/triage-lead": {
+      "Input": "33",
+      "Output": "11.4K",
+      "Cache Read": "986.2K",
+      "Cache Write": "52.5K"
+    },
+    "beta/triage": {
+      "Input": "9",
+      "Output": "1.3K",
+      "Cache Read": "115.0K",
+      "Cache Write": "21.5K"
+    },
+    "alpha/developer": {
+      "Input": "64",
+      "Output": "22.0K",
+      "Cache Read": "2.9M",
+      "Cache Write": "54.3K"
+    },
+    "alpha/quality": {
+      "Input": "40",
+      "Output": "19.8K",
+      "Cache Read": "1.5M",
+      "Cache Write": "47.2K"
+    },
+    "alpha/docs": {
+      "Input": "40",
+      "Output": "8.4K",
+      "Cache Read": "1.2M",
+      "Cache Write": "27.0K"
+    },
+    "alpha/ux": {
+      "Input": "32",
+      "Output": "8.8K",
+      "Cache Read": "943.7K",
+      "Cache Write": "28.1K"
+    },
+    "alpha/sre": {
+      "Input": "30",
+      "Output": "15.4K",
+      "Cache Read": "835.9K",
+      "Cache Write": "28.3K"
+    },
+    "alpha/product-owner": {
+      "Input": "30",
+      "Output": "8.0K",
+      "Cache Read": "709.7K",
+      "Cache Write": "19.3K"
+    },
+    "alpha/mutation": {
+      "Input": "280",
+      "Output": "73.6K",
+      "Cache Read": "25.9M",
+      "Cache Write": "195.9K"
+    }
+  },
+  "failure": "task failed: alpha/performance",
+  "exit_code": 1,
+  "elapsed_seconds": 3208.26,
+  "finished_at": "2026-11-26T05:29:37.394858+00:00",
+  "retries": 0,
+  "reviewer_failures": {
+    "performance": "TASK_STATUS_REASON_SANDBOX_CRASHED: killed for exceeding its memory limit",
+    "principal": "TASK_STATUS_REASON_SANDBOX_CRASHED: killed for exceeding its memory limit",
+    "security": "TASK_STATUS_REASON_SANDBOX_CRASHED: killed for exceeding its memory limit"
+  },
+  "reviewer_usage": {
+    "status": "unavailable",
+    "reason": "Failed tasks cannot be accessed with AX SSH; principal/security streams terminated during collection. Missing usage is not zero."
+  },
+  "local_git_results": {
+    "role_issues": 10,
+    "pull_requests": 8,
+    "branches": [
+      "ci-check/plumbing",
+      "epic/product-owner",
+      "epic/docs",
+      "epic/ux",
+      "epic/sre",
+      "epic/quality",
+      "epic/developer",
+      "epic/mutation"
+    ],
+    "review_comments_at_capture": 0,
+    "formal_reviews_at_capture": 0,
+    "push": "ok",
+    "pr_http_status": 201,
+    "issue_read_http_status": 200,
+    "issue_comment_http_status": 201
+  },
+  "mutation_report": {
+    "source": "Agent-reported mutation PR; not independently reproduced",
+    "baseline_selected_code_killed": 87,
+    "final_selected_code_killed": 107,
+    "selected_code_total": 116,
+    "reported_selected_tests_passed": 59,
+    "reported_selected_tests_deselected": 5,
+    "exclusion_reason": "Agent reports a developer config-scoping defect",
+    "full_quality_gate_verified": false,
+    "evidence_skill_effect_proven": false
+  },
+  "operational_checks": {
+    "unlisted_host_probe": "blocked-host=000refused",
+    "suspend_resume": "UNVERIFIED: not reached",
+    "sandbox_credentials": "UNVERIFIED: final inspection not reached",
+    "cross_tenant_clone": "UNVERIFIED: not reached"
+  },
+  "independent_verification": {
+    "report": "team-demo-independent-tests-2026-11-26.json",
+    "seed_exit_code": 2,
+    "combined_exit_code": 2,
+    "quality_gate_verified": false
+  },
+  "cleanup": {
+    "command_exit_code": 0,
+    "alpha_demo_tasks_remaining": 0,
+    "beta_demo_tasks_remaining": 0,
+    "alpha_demo_workspaces_remaining": 0,
+    "beta_demo_workspaces_remaining": 0,
+    "team_gateways_removed": true,
+    "worker_replicas_desired": 1,
+    "worker_replicas_actual": 1,
+    "worker_replicas_ready": 1,
+    "preexisting_default_resources_preserved": true,
+    "preexisting_alpha_beta_git_gateways_preserved": true
+  }
+}

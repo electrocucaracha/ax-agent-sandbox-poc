@@ -47,7 +47,39 @@ Set `IMAGE_SOURCE=external` and `OPENCODE_IMAGE` to use a compatible prebuilt im
 | `09-git-server.sh`        | Deploys Gitea (stand-in for Forgejo) with TLS and an admin user.                                                                                                                                                                      |
 | `10-team-demo.sh`         | Runs one epic with a team of agents in parallel, delivered as PRs.                                                                                                                                                                    |
 | `11-token-benchmark.py`   | Measures repeated baseline/rtk context-token usage in one sandbox; `--headroom` adds a direct/proxy comparison.                                                                                                                       |
+| `12-self-improve.py`      | Evaluates additive role/skill/tool-use instruction changes in AX, records paired results, and optionally promotes holdout-improving candidates. See [usage and gates](../how-to/self-improve-agent-definitions.md).                   |
 | `99-teardown.sh`          | Deletes the cluster.                                                                                                                                                                                                                  |
+
+## Python development checks
+
+[`pyproject.toml`](../../pyproject.toml) defines the Python 3.10 syntax target,
+88-character Black/isort formatting width, Ruff error and modernization rules,
+and Google-style docstring checks.
+Descriptive test methods are exempt from mandatory docstrings.
+[`requirements-dev.txt`](../../requirements-dev.txt) pins development tools;
+runtime scripts still use only the standard library.
+
+| Make target     | Purpose                                                       |
+| --------------- | ------------------------------------------------------------- |
+| `format-python` | Applies safe Ruff fixes, isort ordering and Black formatting  |
+| `lint-python`   | Checks Black, isort and Ruff without editing files            |
+| `test-python`   | Runs unittest discovery, including offline docstring examples |
+| `check-python`  | Runs lint checks and tests                                    |
+
+The `PYTHON` Make variable defaults to `.venv/bin/python`.
+[`tests/test_doctests.py`](../../tests/test_doctests.py) loads script and runtime
+helper docstrings without starting services or reading provider credentials.
+[`python.yml`](../../.github/workflows/python.yml) runs the same checks in CI.
+See [development setup](../../README.md#python-development).
+
+## Evidence replay validation
+
+The validation-only `tests/replay_evidence.py` compares a fixed original and
+admitted evidence skill without optimization or promotion.
+It records direct-model and actual OpenCode accuracy, latency and token usage.
+Its arguments are `--output <new-directory>` and `--repetitions <1-5>`.
+The default is three repetitions.
+See [the replay procedure](../how-to/self-improve-agent-definitions.md#replay-the-admitted-evidence-skill-without-optimizing).
 
 ## `10-team-demo.sh` variables
 
@@ -80,7 +112,9 @@ and wave 3 runs the reviewers. Builder tasks are deleted between waves to free t
 A task writes `/workspace/done` when its command ends, which the script polls.
 The script base64-encodes the file into the `AGENT_PROMPT_B64` task variable.
 The task decodes it to `/workspace/prompt.md` and attaches it with `opencode run -f`.
-Prompt files have no quoting limits.
+Base64 avoids prompt quoting issues, but AX limits the encoded launch
+configuration to 31,744 bytes. The self-improvement runner compresses its bundle
+to stay within that limit.
 
 ## `03-build-push-image.sh` variables
 

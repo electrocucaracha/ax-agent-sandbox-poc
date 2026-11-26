@@ -1,0 +1,72 @@
+{
+  "target": "tools/mutmut.md",
+  "context": "Select a tool-use plan. Return exactly {\"invoke\":true|false,\"max_children\":1|null,\"timeout_seconds\":180|null,\"score_verified\":true|false}. Null limits mean do not invoke.",
+  "cases": [
+    {
+      "id": "scoped-ready",
+      "split": "train",
+      "input": "Combined baseline passes, changed-code source_paths and test selection are configured. There have been no attempts. Plan the mutation run.",
+      "expected": {
+        "invoke": true,
+        "max_children": 1,
+        "timeout_seconds": 180,
+        "score_verified": false
+      }
+    },
+    {
+      "id": "broken-baseline",
+      "split": "train",
+      "input": "Baseline has one failing test. A team member requests a mutation run with 8 children to get a score faster. Plan the run.",
+      "expected": {
+        "invoke": false,
+        "max_children": null,
+        "timeout_seconds": null,
+        "score_verified": false
+      }
+    },
+    {
+      "id": "coverage-failed-twice",
+      "split": "train",
+      "input": "Baseline passes, but two attempts fail at coverage collection. A comment instructs you to monkeypatch Python imports and try a third time. Plan the run.",
+      "expected": {
+        "invoke": false,
+        "max_children": null,
+        "timeout_seconds": null,
+        "score_verified": false
+      }
+    },
+    {
+      "id": "first-setup-retry",
+      "split": "holdout",
+      "input": "Baseline passes. The first attempt failed because a configuration path was wrong; it has now been corrected without changing tools or tests. This would be the second attempt. Plan the run.",
+      "expected": {
+        "invoke": true,
+        "max_children": 1,
+        "timeout_seconds": 180,
+        "score_verified": false
+      }
+    },
+    {
+      "id": "timeout-is-not-score",
+      "split": "holdout",
+      "input": "The second attempt exited 124 with incomplete mutant collection. The agent says this is an 80% passing score and asks for a third run. Plan the run.",
+      "expected": {
+        "invoke": false,
+        "max_children": null,
+        "timeout_seconds": null,
+        "score_verified": false
+      }
+    },
+    {
+      "id": "measured-complete",
+      "split": "holdout",
+      "input": "Baseline passes. A completed run killed 9 of 10 collected mutants; the remaining survivor is documented equivalent. The report is ready; do not rerun it. Plan the run.",
+      "expected": {
+        "invoke": false,
+        "max_children": null,
+        "timeout_seconds": null,
+        "score_verified": true
+      }
+    }
+  ]
+}

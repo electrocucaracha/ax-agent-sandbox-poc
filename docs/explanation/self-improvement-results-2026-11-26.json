@@ -1,0 +1,940 @@
+{
+  "generated_at": "2026-11-26T04:15:05.674338+00:00",
+  "scope": "Real-model structured decision evaluations in AX gVisor; one successful OpenCode file-writing smoke. Not full coding-team or mutation-score gains.",
+  "canonical_runs": [
+    "mutation-agent-final-2026-11-26",
+    "mutmut-tool-final-2026-11-26",
+    "evidence-skill-smoke-absolute-2026-11-26"
+  ],
+  "all_runs": [
+    {
+      "run": "evidence-skill-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-d778f344da46",
+        "complete": true,
+        "failed": []
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 2,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        }
+      ],
+      "direct_requests": 13,
+      "usage": {
+        "input_tokens": 3445,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 699
+      },
+      "status": "completed"
+    },
+    {
+      "run": "evidence-skill-final-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-final-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-73c8a341e526",
+        "complete": true,
+        "failed": [],
+        "request_trace_collected": true
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": true,
+      "promoted": false,
+      "protocol_version": 2,
+      "runtime_smoke": {
+        "verified": false,
+        "case": "unattended-recovery",
+        "exit_code": 1,
+        "correct": false,
+        "inputs_unchanged": true,
+        "answer": "",
+        "scope": "One OpenCode file-writing decision task, not a coding-team benchmark"
+      },
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": true,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 2
+            },
+            "rule": "No paired regression; strict improvement on holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 2,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 8300,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 497
+      },
+      "status": "runtime-smoke-failed"
+    },
+    {
+      "run": "evidence-skill-gated-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-gated-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-29e5cccc3f05",
+        "complete": true,
+        "failed": [],
+        "request_trace_collected": true
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": true,
+      "promoted": true,
+      "protocol_version": 2,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": true,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 2
+            },
+            "rule": "No paired regression; strict improvement on holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 2,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 8300,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 497
+      },
+      "status": "completed"
+    },
+    {
+      "run": "evidence-skill-proposal-fix-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-proposal-fix-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-87c3fa640559",
+        "complete": true,
+        "failed": []
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 2,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        },
+        {
+          "iteration": 2,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 2,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        }
+      ],
+      "direct_requests": 26,
+      "usage": {
+        "input_tokens": 6890,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 1398
+      },
+      "status": "completed"
+    },
+    {
+      "run": "evidence-skill-smoke-absolute-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-smoke-absolute-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-43b06ab3893f",
+        "complete": true,
+        "failed": [],
+        "request_trace_collected": true
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": true,
+      "promoted": true,
+      "protocol_version": 2,
+      "runtime_smoke": {
+        "verified": true,
+        "case": "unattended-recovery",
+        "exit_code": 0,
+        "correct": true,
+        "inputs_unchanged": true,
+        "answer": "{\"claim_verified\":false,\"classification\":\"unverified\"}",
+        "scope": "One OpenCode file-writing decision task, not a coding-team benchmark"
+      },
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": true,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 2
+            },
+            "rule": "No paired regression; strict improvement on holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 2,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 8300,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 497
+      },
+      "status": "completed"
+    },
+    {
+      "run": "evidence-skill-smoke-diagnostics-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-smoke-diagnostics-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-8705f12de38f",
+        "complete": true,
+        "failed": [],
+        "request_trace_collected": true
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": true,
+      "promoted": false,
+      "protocol_version": 2,
+      "runtime_smoke": {
+        "verified": false,
+        "case": "unattended-recovery",
+        "exit_code": 1,
+        "correct": false,
+        "inputs_unchanged": true,
+        "answer": "",
+        "scope": "One OpenCode file-writing decision task, not a coding-team benchmark"
+      },
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": true,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 2
+            },
+            "rule": "No paired regression; strict improvement on holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 2,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 8300,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 497
+      },
+      "status": "runtime-smoke-failed"
+    },
+    {
+      "run": "evidence-skill-system-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/evidence-skill-system-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-d5edba8d9d7b",
+        "complete": true,
+        "failed": []
+      },
+      "target": "skills/evidence/SKILL.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": false,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 2
+            },
+            "rule": "No paired regression; strict improvement on both train and holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 2,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 8300,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 497
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutation-agent-2026-11-26",
+      "report": null,
+      "cleanup": {
+        "resource_name": "self-improve-d33f668a5c68",
+        "complete": false,
+        "failed": ["task"]
+      },
+      "status": "setup-failed"
+    },
+    {
+      "run": "mutation-agent-compressed-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutation-agent-compressed-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-c2f06ae61441",
+        "complete": true,
+        "failed": []
+      },
+      "target": "agents/mutation.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 4,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        }
+      ],
+      "direct_requests": 13,
+      "usage": {
+        "input_tokens": 9029,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 493
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutation-agent-final-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutation-agent-final-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-0f6158c0c50c",
+        "complete": true,
+        "failed": [],
+        "request_trace_collected": true
+      },
+      "target": "agents/mutation.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": 2,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": false,
+            "regression": true,
+            "gains": {
+              "train": 2,
+              "holdout": -2
+            },
+            "rule": "No paired regression; strict improvement on holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 4,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 19596,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 656
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutation-agent-proposal-fix-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutation-agent-proposal-fix-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-6f076e192b67",
+        "complete": true,
+        "failed": []
+      },
+      "target": "agents/mutation.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 4,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        }
+      ],
+      "direct_requests": 13,
+      "usage": {
+        "input_tokens": 9029,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 493
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutation-agent-retry-2026-11-26",
+      "report": null,
+      "status": "setup-failed"
+    },
+    {
+      "run": "mutation-agent-system-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutation-agent-system-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-faef5af635bf",
+        "complete": true,
+        "failed": []
+      },
+      "target": "agents/mutation.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": false,
+            "regression": true,
+            "gains": {
+              "train": 2,
+              "holdout": -2
+            },
+            "rule": "No paired regression; strict improvement on both train and holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 4,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 4,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 19596,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 656
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutmut-tool-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutmut-tool-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-6d159eb3aaf7",
+        "complete": true,
+        "failed": []
+      },
+      "target": "tools/mutmut.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        }
+      ],
+      "direct_requests": 13,
+      "usage": {
+        "input_tokens": 4354,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 628
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutmut-tool-final-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutmut-tool-final-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-f19b98a7a751",
+        "complete": true,
+        "failed": [],
+        "request_trace_collected": true
+      },
+      "target": "tools/mutmut.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": 2,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": false,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 0
+            },
+            "rule": "No paired regression; strict improvement on holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 10027,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 761
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutmut-tool-proposal-fix-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutmut-tool-proposal-fix-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-e1546d1bfb9e",
+        "complete": true,
+        "failed": []
+      },
+      "target": "tools/mutmut.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": null,
+          "rejection": "Proposer returned invalid JSON",
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 0,
+              "total": 0
+            },
+            "holdout": {
+              "correct": 0,
+              "total": 0
+            }
+          }
+        }
+      ],
+      "direct_requests": 13,
+      "usage": {
+        "input_tokens": 4354,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 628
+      },
+      "status": "completed"
+    },
+    {
+      "run": "mutmut-tool-system-2026-11-26",
+      "report": "docs/explanation/self-improvement-runs/mutmut-tool-system-2026-11-26/report.json",
+      "cleanup": {
+        "resource_name": "self-improve-1ae24ca04c97",
+        "complete": true,
+        "failed": []
+      },
+      "target": "tools/mutmut.md",
+      "model": "claude-sonnet-4-6",
+      "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+      "eligible": false,
+      "promoted": false,
+      "protocol_version": null,
+      "runtime_smoke": null,
+      "iterations": [
+        {
+          "iteration": 1,
+          "gate": {
+            "eligible": false,
+            "regression": false,
+            "gains": {
+              "train": 0,
+              "holdout": 0
+            },
+            "rule": "No paired regression; strict improvement on both train and holdout"
+          },
+          "rejection": null,
+          "baseline": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          },
+          "candidate": {
+            "train": {
+              "correct": 6,
+              "total": 6
+            },
+            "holdout": {
+              "correct": 6,
+              "total": 6
+            }
+          }
+        }
+      ],
+      "direct_requests": 25,
+      "usage": {
+        "input_tokens": 10027,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 761
+      },
+      "status": "completed"
+    }
+  ],
+  "total_direct_requests": 316,
+  "total_direct_usage": {
+    "input_tokens": 137847,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 9658
+  },
+  "opencode_usage": "Not separately measured; excluded from direct-request totals",
+  "development_failures": [
+    "Initial task exceeded AX 31744-byte launch configuration cap; fixed with zlib bundle compression.",
+    "First cleanup retry hit a bytes/text diagnostic mismatch; exact named resources subsequently removed.",
+    "Proposer emitted analysis/Markdown instead of JSON; raw-JSON system contract added, old attempts retained.",
+    "OpenCode relative attachments were not resolved; absolute attachments fixed runtime smoke.",
+    "One earlier skill promotion with Unicode punctuation was superseded by re-evaluated ASCII normalization before the final promotion."
+  ],
+  "validation": {
+    "unit_tests_passed": 11,
+    "shell_syntax_passed": true,
+    "diff_whitespace_passed": true,
+    "final_resources_removed": true,
+    "preexisting_resources_preserved": true
+  }
+}

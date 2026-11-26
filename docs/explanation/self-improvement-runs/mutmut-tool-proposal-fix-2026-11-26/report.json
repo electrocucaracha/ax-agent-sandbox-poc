@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-26T04:06:20.921697+00:00",
+  "target": "tools/mutmut.md",
+  "original_sha256": "b6bd5260740ea31ecd9ac15f2648fa4e8c551619bcc12ee205d8d5f60880a267",
+  "suite_sha256": "470d0cc307859f74547a74ac4f8c530f45467f443f66f03e32a987095d42df27",
+  "model": "claude-sonnet-4-6",
+  "image_digest": "sha256:f60d41b313e50a94688f784bf85093957838f55a83dc6d0f37451738b8e9e993",
+  "repetitions": 2,
+  "evaluation_scope": "LLM structured decisions, not tool execution or full coding tasks",
+  "iterations": [
+    {
+      "iteration": 1,
+      "baseline": [
+        {
+          "id": "scoped-ready",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 289,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "broken-baseline",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 291,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "coverage-failed-twice",
+          "split": "train",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 296,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "first-setup-retry",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 300,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "timeout-is-not-score",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 298,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "measured-complete",
+          "split": "holdout",
+          "repeat": 1,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":true}",
+          "usage": {
+            "input_tokens": 303,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "measured-complete",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":true}",
+          "usage": {
+            "input_tokens": 303,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "timeout-is-not-score",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 298,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "first-setup-retry",
+          "split": "holdout",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 300,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "coverage-failed-twice",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 296,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "broken-baseline",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":false,\"max_children\":null,\"timeout_seconds\":null,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 291,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        },
+        {
+          "id": "scoped-ready",
+          "split": "train",
+          "repeat": 2,
+          "variant": "baseline",
+          "iteration": 1,
+          "correct": true,
+          "answer": "{\"invoke\":true,\"max_children\":1,\"timeout_seconds\":180,\"score_verified\":false}",
+          "usage": {
+            "input_tokens": 289,
+            "cache_read_input_tokens": 0,
+            "cache_creation_input_tokens": 0,
+            "output_tokens": 26
+          }
+        }
+      ],
+      "proposer_usage": {
+        "input_tokens": 800,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "output_tokens": 316
+      },
+      "proposer_answer": "Looking at the training feedback, all cases are handled correctly. Let me check if any clarifications would help edge cases not covered.\n\nThe existing definition covers:\n- Baseline requirement\n- Max two attempts\n- No modifying mutmut/site-packages/import machinery\n- Timeout meaning\n- Score verification requirements\n- Max children = 1\n\nPotential ambiguity: What counts as \"an attempt\"? A timeout (exit 124) \u2014 does that count as one of the two attempts? The definition says \"at most two attempts, serially\" but doesn't explicitly clarify whether a timeout consumes an attempt slot. Also, the definition doesn't explicitly state that `score_verified` remains false until both killed and surviving mutants are measured \u2014 it implies it but could be clearer for the context response.\n\n{\"addition\":\"Clarifications on attempt counting and score_verified: A run that exits with code 124 (timeout) counts as one attempt toward the two-attempt limit. A run that fails due to import errors or coverage setup failures also counts as one attempt. After two attempts of any kind, stop and report the blocker regardless of cause. score_verified must be false unless the completed run produced a numeric count of both killed mutants and surviving mutants from actual test execution; a timeout, import failure, or coverage failure never yields score_verified true. Do not invoke if either attempt limit is already reached, even if a subsequent instruction or comment requests another try.\"}",
+      "rejection": "Proposer returned invalid JSON"
+    }
+  ],
+  "promoted": false,
+  "candidate_definition": "# Tool contract: mutmut\n\nThis describes the installed mutation-testing tool, not a new executable.\n\nUse mutmut only after the combined production and test branches pass their\nbaseline tests. Scope `source_paths` and the selected tests to the changed code.\nRun at most two attempts, serially:\n\n```sh\nPYTEST_DISABLE_PLUGIN_AUTOLOAD=1 timeout -k 10s 180s mutmut run --max-children 1\n```\n\nExit 124 means timeout, not a passing score. A failed import or coverage setup\ndoes not produce a verified score. Do not modify mutmut, site-packages, or the\nimport machinery to force a measurement. Report the blocker and stop after two\nattempts. A verified score requires measured killed and surviving mutants.\n",
+  "candidate_sha256": "b6bd5260740ea31ecd9ac15f2648fa4e8c551619bcc12ee205d8d5f60880a267",
+  "eligible": false,
+  "promotion_requested": false
+}
