@@ -16,11 +16,13 @@ For a one-page overview, see the [project README](../README.md).
 | Run a different agent CLI                                  | [Plug in another agent](how-to/plug-in-another-agent.md)                       |
 | Fix an error                                               | [Troubleshoot](how-to/troubleshoot.md)                                         |
 | Run several agents per tenant                              | [Run the team demo](how-to/run-team-demo.md)                                   |
+| Run the team demo against an external Ollama server        | [Team demo with Ollama](how-to/run-team-demo-with-ollama.md)                   |
 | Host repositories on an in-cluster git server              | [Host repositories](how-to/host-repositories-with-git-server.md)               |
 | Look up a script, variable or file                         | [Scripts and configuration reference](reference/scripts-and-configuration.md)  |
 | See what `ax get` and `ax describe` print                  | [AX CLI output reference](reference/ax-cli-output.md)                          |
 | Look up components, resources and roles                    | [Components and roles](reference/components-and-roles.md)                      |
 | Follow one run end to end                                  | [How it all works together](explanation/how-it-works-end-to-end.md)            |
+| Understand the team demo with diagrams and analogies       | [The team demo, explained](explanation/team-demo-explained.md)                 |
 | Understand how AX and Substrate work together              | [How AX and Agent Substrate work together](explanation/ax-and-substrate.md)    |
 | Evaluate OpenKruise Agents as a complement or replacement  | [OpenKruise Agents evaluation](explanation/openkruise-agents-evaluation.md)    |
 | Understand this project's design                           | [Architecture](explanation/architecture.md)                                    |

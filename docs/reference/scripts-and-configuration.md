@@ -56,8 +56,9 @@ Set `IMAGE_SOURCE=external` and `OPENCODE_IMAGE` to use a compatible prebuilt im
 88-character Black/isort formatting width, Ruff error and modernization rules,
 and Google-style docstring checks.
 Descriptive test methods are exempt from mandatory docstrings.
-[`requirements-dev.txt`](../../requirements-dev.txt) pins development tools;
-runtime scripts still use only the standard library.
+The `dev` dependency group in [`pyproject.toml`](../../pyproject.toml) pins
+development tools; runtime scripts still use only the standard library and
+declare no dependencies in their PEP 723 `# /// script` metadata.
 
 | Make target     | Purpose                                                       |
 | --------------- | ------------------------------------------------------------- |
@@ -155,16 +156,16 @@ Placeholders must be strings after rendering: kustomize rewrites quoting, so a q
 
 ## Other files
 
-| Path                         | Purpose                                                                            |
-| ---------------------------- | ---------------------------------------------------------------------------------- |
-| `resources/team/`            | Kustomization: Gateway (git and LLM hosts, header injection) and a Workspace.      |
-| `resources/task/`            | Kustomization: a Task that mounts the workspace and runs one role.                 |
-| `resources/mock-llm/`        | Kustomization for the mock LLM; `server.py` logs the received `Authorization`.     |
-| `resources/git-server/`      | Kustomization for Gitea.                                                           |
-| `resources/headroom/`        | Kustomization and Dockerfile for the Headroom proxy.                               |
-| `resources/egress-trust/`    | JSON patch that mounts the extra CA bundle into the egress gateway.                |
-| `scripts/issues.py`          | Creates the epic issue, lists `[role:<name>]` issues, and holds the fallback plan. |
-| `image/opencode.ollama.json` | OpenCode config for Ollama (`OC_CONFIG=/opt/opencode.ollama.json`).                |
+| Path                         | Purpose                                                                                                                                                                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `resources/team/`            | Kustomization: Gateway (git and LLM hosts, header injection) and a Workspace.                                                                                                                                    |
+| `resources/task/`            | Kustomization: a Task that mounts the workspace and runs one role.                                                                                                                                               |
+| `resources/mock-llm/`        | Kustomization for the mock LLM; `server.py` logs the received `Authorization`.                                                                                                                                   |
+| `resources/git-server/`      | Kustomization for Gitea.                                                                                                                                                                                         |
+| `resources/headroom/`        | Kustomization and Dockerfile for the Headroom proxy.                                                                                                                                                             |
+| `resources/egress-trust/`    | JSON patch that mounts the extra CA bundle into the egress gateway.                                                                                                                                              |
+| `scripts/issues.py`          | Click CLI (run with `uv run --script`) with `epic`, `list`, `body`, and `fallback` subcommands for the team-demo issues. Verifies the git server certificate against `certs/ca.crt`; `-v` logs each API request. |
+| `image/opencode.ollama.json` | OpenCode config for Ollama (`OC_CONFIG=/opt/opencode.ollama.json`).                                                                                                                                              |
 
 ## Credential options
 

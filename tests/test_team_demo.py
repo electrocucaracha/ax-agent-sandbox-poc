@@ -18,7 +18,11 @@ class TeamDemoTests(unittest.TestCase):
                 '\ninfo "Credentials in a sandbox'
             )
         ]
-        tenant_check = script[script.index('\ninfo "Tenant boundary:') :]
+        tenant_check = script[
+            script.index('\ninfo "Tenant boundary:') : script.index(
+                '\ninfo "Usage and accuracy'
+            )
+        ]
         harness = r"""
 set -eu
 info() { :; }

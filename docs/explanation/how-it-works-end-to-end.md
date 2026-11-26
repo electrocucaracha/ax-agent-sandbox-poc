@@ -26,28 +26,28 @@ This page connects them in time.
 
 ```mermaid
 flowchart LR
-    subgraph Host
-        U[You: ax CLI<br/>and scripts]
+    subgraph Host["Host"]
+        U["You: ax CLI<br/>and scripts"]
     end
     subgraph Cluster["kind cluster"]
-        AX[AX server<br/>Tasks, Workspaces,<br/>Gateways, atespaces]
-        SUB[Substrate<br/>control plane + atelet]
+        AX["AX server<br/>Tasks, Workspaces,<br/>Gateways, atespaces"]
+        SUB["Substrate<br/>control plane + atelet"]
         subgraph Workers["Worker pods (gVisor)"]
-            A1[alpha builders:<br/>developer, quality, mutation,<br/>docs, ux, sre, product-owner]
-            A2[alpha reviewers:<br/>principal, security, performance]
-            A3[alpha/ci-check]
-            B1[beta/triage]
+            A1["alpha builders:<br/>developer, quality, mutation,<br/>docs, ux, sre, product-owner"]
+            A2["alpha reviewers:<br/>principal, security, performance"]
+            A3["alpha/ci-check"]
+            B1["beta/triage"]
         end
-        EG[Egress proxy +<br/>credential provider]
-        SEC[(Tenant Secrets)]
-        GIT[Gitea]
-        LLM[LLM endpoint]
+        EG["Egress proxy +<br/>credential provider"]
+        SEC[("Tenant Secrets")]
+        GIT["Gitea"]
+        LLM["LLM endpoint"]
     end
     U --> AX --> SUB --> Workers
-    Workers -->|all outbound traffic| EG
-    EG -->|reads| SEC
-    EG -->|token injected| GIT
-    EG -->|key injected| LLM
+    Workers -->|"all outbound traffic"| EG
+    EG -->|"reads"| SEC
+    EG -->|"token injected"| GIT
+    EG -->|"key injected"| LLM
 ```
 
 The one idea to hold on to:
@@ -201,7 +201,7 @@ Two layers protect `alpha`: the credential policy stops `beta` from reading `alp
 
 - The agent can still misuse a credential while it runs, for example by asking the LLM to leak its own conversation.
   Injection keeps the secret out of the sandbox; it does not make every use safe.
-- Headroom, if used, sees the real key.
+- Headroom, if used, sees the real key ([details](credential-injection.md#limits-of-the-protection)).
 - Workspaces are snapshots.
   To pick up new commits, create a new Workspace.
 - The demo uses a mock LLM, so role prompts do not change the output until you use a real model.

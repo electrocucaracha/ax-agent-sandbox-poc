@@ -88,6 +88,26 @@ Build the graph before the image build.
    `image/Dockerfile` copies `sample-repo` to `/opt/sample-repo` and `graph` to `/opt/graph`.
 3. Run as usual.
 
+---
+
+## Measuring cost and accuracy
+
+Run the accuracy harness and the paired benchmark from the repository root:
+
+```bash
+python3 scripts/13-accuracy-eval.py --repetitions 3 --output accuracy-eval.json
+python3 scripts/11-token-benchmark.py --repetitions 3 --headroom --output sandbox-benchmark.json
+```
+
+Cost tools for ongoing spend, run on the host:
+
+- `codeburn status` and `codeburn models` report spend and token use by model and task.
+- `ccusage daily --json --offline` reports daily tokens and cost by model.
+
+Both read local agent session logs.
+They do not see direct script calls, and they do not measure answer accuracy.
+Use the harness for accuracy and the benchmark for paired token counts.
+
 The "Code navigation" section of `image/AGENTS.md` tells the agent to run `graphify explain` and `graphify path`
 against `/opt/graph/graphify-out/graph.json` before it greps.
 To use another repository, change the paths in that section and in `image/Dockerfile`.

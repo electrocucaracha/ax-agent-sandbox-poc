@@ -1,5 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv --quiet run --script
 """Replay frozen original/improved instructions in AX without proposing changes."""
+
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 
 import argparse
 import base64

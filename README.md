@@ -28,7 +28,7 @@ flowchart TB
         b1["Sandbox: agent 3<br/>(Tenant B)"]
     end
     egress["Egress gateway<br/>per-tenant allowlist + key injection"]
-    llm([LLM endpoints])
+    llm(["LLM endpoints"])
 
     tenants --> ax --> pool
     a1 & a2 & b1 --> egress --> llm
@@ -135,12 +135,13 @@ end-to-end coding improvement.
 
 ## Python development
 
-Use Python 3.10 or newer and an isolated development environment:
+Use [uv](https://docs.astral.sh/uv/) with Python 3.10 or newer to create the
+isolated development environment from the `dev` dependency group in
+`pyproject.toml`:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-dev.txt
-make format-python
+uv sync --group dev
+uv run --group dev make format-python
 make check-python
 ```
 
@@ -165,12 +166,8 @@ changes affect the provenance hashes of future runs only.
 
 ## Documentation
 
-| Section     | Pages                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tutorial    | [Run your first sandboxed task](docs/tutorials/first-task.md)                                                                                                                                                                                                                                                                                                                                                                                              |
-| How-to      | [Real LLM endpoint](docs/how-to/use-real-llm-endpoint.md), [Private CA](docs/how-to/trust-private-ca.md), [Token-saving tools](docs/how-to/enable-token-saving-tools.md), [Another agent](docs/how-to/plug-in-another-agent.md), [Team demo](docs/how-to/run-team-demo.md), [Team demo with Ollama](docs/how-to/run-team-demo-with-ollama.md), [Git server](docs/how-to/host-repositories-with-git-server.md), [Troubleshoot](docs/how-to/troubleshoot.md) |
-| Reference   | [Scripts and configuration](docs/reference/scripts-and-configuration.md)                                                                                                                                                                                                                                                                                                                                                                                   |
-| Explanation | [How it all works together](docs/explanation/how-it-works-end-to-end.md), [How AX and Substrate work together](docs/explanation/ax-and-substrate.md), [Architecture](docs/explanation/architecture.md), [Multi-agent and multi-tenant design](docs/explanation/multi-agent-multitenancy.md), [Credential injection](docs/explanation/credential-injection.md), [Token-saving findings](docs/explanation/token-saving-findings.md)                          |
+The [documentation index](docs/README.md) lists every tutorial, how-to guide, reference page, and explanation.
+Start with [Run your first sandboxed task](docs/tutorials/first-task.md).
 
 ## Project layout
 
@@ -196,3 +193,4 @@ Git ignores `certs/`, `.env.*`, the `rtk` and `engram` binaries, `image/opencode
 - **No runtime installs.** The sandbox has no registry access, so bake every dependency into the image.
 - **Local scale.** The setup targets one machine, not a multi-node cluster, and fixed task names per demo run.
 - **Proxies see the key.** A proxy on the request path, such as Headroom, receives the real key.
+  See [Credential injection](docs/explanation/credential-injection.md#limits-of-the-protection).

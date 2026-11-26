@@ -15,7 +15,7 @@ Two separate trust links exist, and each needs its own CA:
 ```mermaid
 flowchart LR
     A["Agent (sandbox)"] -->|"trusts gateway CA<br/>trust-bundle.pem"| E["atenet-egress"]
-    E -->|"trusts upstream CA<br/>egress-upstream-ca ConfigMap"| U([LLM endpoint])
+    E -->|"trusts upstream CA<br/>egress-upstream-ca ConfigMap"| U(["LLM endpoint"])
 ```
 
 This page fixes the second link.

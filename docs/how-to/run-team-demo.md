@@ -16,6 +16,17 @@ scripts/main.sh team-demo        # or: scripts/10-team-demo.sh
 scripts/main.sh team-demo-down   # clean up and scale the pool back to 1
 ```
 
+The demo ends with a usage and accuracy step.
+It writes these files to `.cache/team-demo-usage/`, or to `USAGE_REPORT_DIR` if set:
+
+- `accuracy-eval.json` and `accuracy-eval.md`: paired baseline and rtk answers to fixed questions, scored against ground truth.
+  Set `ACCURACY_REPETITIONS` (default `1`) to repeat each case.
+- `codeburn-status.txt` and `codeburn-models.txt`: local cost by model and task, when `codeburn` is installed.
+- `ccusage-daily.json`: daily token use by model, when `ccusage` is installed.
+
+The accuracy step calls the LLM directly from the host, so its tokens are not in the agent totals.
+`codeburn` and `ccusage` read local agent logs only, so they do not see those calls either.
+
 ## The epic
 
 The epic is in [agents/epic.md](../../agents/epic.md): add configuration-file support to the Click library, which is the seed repository.
@@ -29,11 +40,11 @@ The trigger is an issue, as it would be in a real team.
 
 ```mermaid
 flowchart LR
-  E[Epic reported as issue #1] --> T[triage-lead agent]
-  T -->|one issue per role| I["[role:developer] ... [role:security]"]
-  I --> B[Builder agents, one per issue]
-  B -->|implementation and test branches| M[Mutation agent]
-  M -->|PRs: Closes #N| R[Reviewer agents]
+  E["Epic reported as issue #1"] --> T["triage-lead agent"]
+  T -->|"one issue per role"| I["[role:developer] ... [role:security]"]
+  I --> B["Builder agents, one per issue"]
+  B -->|"implementation and test branches"| M["Mutation agent"]
+  M -->|"PRs: Closes #N"| R["Reviewer agents"]
 ```
 
 1. The script creates issue #1 on `alpha/app` from `agents/epic.md`.

@@ -1,11 +1,17 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv --quiet run --script
 """Reflect on training failures, evaluate additive instructions, and gate promotion."""
+
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 
 import argparse
 import base64
 import datetime
 import hashlib
 import json
+import logging
 import os
 import re
 import runpy
@@ -18,6 +24,8 @@ import urllib.parse
 import uuid
 import zlib
 from pathlib import Path
+
+log = logging.getLogger("self-improve")
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_ADDITION = 2000
@@ -707,8 +715,11 @@ def run(args):
                 (args.output / "report.json").write_text(
                     json.dumps(report, indent=2) + "\n"
                 )
-                print(
-                    f"eligible={report['eligible']}, promoted={report['promoted']}; results: {args.output}"
+                log.info(
+                    "eligible=%s, promoted=%s; results: %s",
+                    report["eligible"],
+                    report["promoted"],
+                    args.output,
                 )
                 return
             states = command([ax, "get", "tasks"]).splitlines()
@@ -730,9 +741,9 @@ def run(args):
                     (args.output / "requests.jsonl").write_text(trace.stdout)
                     trace_collected = True
                 else:
-                    print("Could not collect sandbox request trace.", file=sys.stderr)
+                    log.warning("Could not collect sandbox request trace.")
             except subprocess.TimeoutExpired:
-                print("Sandbox request trace collection timed out.", file=sys.stderr)
+                log.warning("Sandbox request trace collection timed out.")
         failures = []
         for cleanup in reversed(resources):
             try:
@@ -803,6 +814,7 @@ if __name__ == "__main__":
             )
         Path("/workspace/report.json").write_text(json.dumps(report, indent=2) + "\n")
     else:
+        logging.basicConfig(level=logging.INFO, format="%(message)s")
         if args.suite is None or args.output is None:
             parser.error("--suite and --output are required")
         try:
@@ -814,14 +826,11 @@ if __name__ == "__main__":
             subprocess.SubprocessError,
             OSError,
         ) as error:
-            # Avoid printing command input, settings, or provider response bodies.
+            # Avoid logging command input, settings, or provider response bodies.
             message = (
                 str(error)
                 if isinstance(error, (ValueError, RuntimeError, TimeoutError))
                 else type(error).__name__
             )
-            print(
-                f"Self-improvement failed: {message}; inspect local artifacts.",
-                file=sys.stderr,
-            )
+            log.error("Self-improvement failed: %s; inspect local artifacts.", message)
             sys.exit(1)

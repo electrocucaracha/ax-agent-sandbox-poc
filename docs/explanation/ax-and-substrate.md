@@ -61,21 +61,8 @@ flowchart TB
     egress --> cred
 ```
 
-| Component                                         | Namespace     | What it does                                                                                                  |
-| ------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------- |
-| `ax-server`                                       | `ax-system`   | AX control plane. Validates manifests, takes locks, and reconciles with Substrate.                            |
-| `ax-postgres`                                     | `ax-system`   | Stores AX resources and the leases behind its distributed locks.                                              |
-| `ate-api-server`                                  | `ate-system`  | Substrate control plane. Holds the actor-to-worker mapping, schedules, and authorizes each call per atespace. |
-| `ate-controller`                                  | `ate-system`  | Turns `WorkerPool` custom resources into worker Deployments.                                                  |
-| `atelet`                                          | `ate-system`  | Per-node supervisor. Restores, runs and checkpoints sandboxes, and moves snapshots.                           |
-| `atenet-router`                                   | `ate-system`  | Ingress proxy. Resumes a suspended actor when traffic arrives.                                                |
-| `atenet-egress`                                   | `ate-system`  | Egress proxy. Enforces the allowlist and injects credentials.                                                 |
-| `ate-idp-server`                                  | `ate-system`  | Issues identity to actors.                                                                                    |
-| `k8s-credential-provider`                         | `ate-system`  | Reads Kubernetes Secrets for credential injection.                                                            |
-| `postgres`                                        | `ate-system`  | Substrate state store for actors and workers.                                                                 |
-| `rustfs`                                          | `ate-system`  | S3-compatible object store for snapshots and sandbox assets.                                                  |
-| `ax-workers` pods                                 | `ate-workers` | Warm worker pods that host sandboxes.                                                                         |
-| `jaeger`, `prometheus`, `opentelemetry-collector` | `otel-system` | Traces and metrics.                                                                                           |
+The [components and roles reference](../reference/components-and-roles.md) lists each component, its namespace, and its role.
+This page explains how they cooperate.
 
 Two PostgreSQL databases exist on purpose.
 Substrate's holds the live state of actors and workers.
@@ -100,13 +87,13 @@ AX adds the agent-oriented layer above that: a workspace to prepare, a command t
 
 ```mermaid
 flowchart LR
-    subgraph AX
+    subgraph AX["AX"]
         task["Task"]
         ws["Workspace"]
         gw["Gateway"]
         mdl["Model"]
     end
-    subgraph Substrate
+    subgraph Substrate["Substrate"]
         tpl["ActorTemplate<br/>immutable, shared by profile"]
         actor["Actor<br/>RUNNING or SUSPENDED"]
         pool["WorkerPool"]
@@ -231,7 +218,7 @@ flowchart LR
     router -->|"mTLS CONNECT"| tunnel["atunnel on worker :8443"]
     tunnel --> actor["Actor"]
     actor -->|"all outbound"| egress["atenet-egress"]
-    egress -->|"allowed hosts only"| net([Internet or LLM])
+    egress -->|"allowed hosts only"| net(["Internet or LLM"])
 ```
 
 - **Inbound.**

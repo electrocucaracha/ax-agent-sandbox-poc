@@ -1,5 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv --quiet run --script
 """Independently run seed and combined developer/quality tests inside a demo task."""
+
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 
 import json
 import os

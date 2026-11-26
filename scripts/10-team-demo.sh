@@ -15,7 +15,8 @@
 # Needs 05-mock-llm.sh, 09-git-server.sh and the image (.env.opencode). `down` cleans up.
 # Env: OPENCODE_IMAGE, LLM_HOST, LLM_PATH, LLM_MODEL_ID, LLM_AUTH_MODE, LLM_EXTRA_HEADERS_JSON, OC_CONFIG,
 #      LLM_API_KEY, LITELLM_PROXY_API_BASE, LITELLM_PROXY_API_KEY, OLLAMA_URL, WORKERS, EPIC_TIMEOUT, MUTATION_MEMORY, MUTATION_TIMEOUT,
-#      SAMPLE_REPO_URL and SAMPLE_REPO_REF (used when image/sample-repo is absent)
+#      SAMPLE_REPO_URL and SAMPLE_REPO_REF (used when image/sample-repo is absent),
+#      ACCURACY_REPETITIONS (default 1) and USAGE_REPORT_DIR (default .cache/team-demo-usage) for the final usage report
 set -euo pipefail
 export PATH="$HOME/.ax/bin:$PATH"
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
@@ -180,7 +181,7 @@ for t in $TENANTS; do echo "$t: $(ax -a "$t" describe workspace "$t-app" | grep 
 
 info "Report the epic as issue #1 on alpha/app"
 pf_up
-EPIC_ISSUE=$(python3 "$HERE/scripts/issues.py" epic alpha/app "$HERE/agents/epic.md")
+EPIC_ISSUE=$(uv run --quiet --script "$HERE/scripts/issues.py" epic alpha/app "$HERE/agents/epic.md")
 pf_down
 echo "epic issue: #$EPIC_ISSUE"
 
@@ -276,15 +277,15 @@ ax -a alpha delete task triage-lead >/dev/null 2>&1 || true # free its worker
 KEEP=(); for r in "${ROLES[@]}"; do case $r in *"|triage-lead|"*) ;; *) KEEP+=("$r") ;; esac; done; ROLES=("${KEEP[@]}")
 ISSUE_DIR=$(mktemp -d)
 pf_up
-role_issues() { python3 "$HERE/scripts/issues.py" list alpha/app | grep -E "\|($(echo $BUILDERS $REVIEWERS | tr ' ' '|'))\$" || true; }
+role_issues() { uv run --quiet --script "$HERE/scripts/issues.py" list alpha/app | grep -E "\|($(echo $BUILDERS $REVIEWERS | tr ' ' '|'))\$" || true; }
 if [ -z "$(role_issues)" ]; then
   echo "triage-lead created no role issues (expected with the canned mock LLM): creating them from the fixed plan"
-  python3 "$HERE/scripts/issues.py" fallback alpha/app
+  uv run --quiet --script "$HERE/scripts/issues.py" fallback alpha/app
 fi
 seen=" "
 while IFS='|' read -r n role; do
   case $seen in *" $role "*) continue ;; esac; seen="$seen$role "
-  python3 "$HERE/scripts/issues.py" body alpha/app "$n" > "$ISSUE_DIR/$n.md"
+  uv run --quiet --script "$HERE/scripts/issues.py" body alpha/app "$n" > "$ISSUE_DIR/$n.md"
   if [ "$role" = mutation ]; then
     w=2
   else
@@ -341,3 +342,16 @@ TENANT=beta WS=beta-x REPO=alpha/app render "$TEAM_RESOURCES" '${TENANT} ${WS} $
 phase=$(ax -a beta describe workspace beta-x | awk '/^Phase:/ { print $2 }')
 echo "cross-tenant workspace phase: $phase"
 [[ "$phase" == Failed ]] || { error "expected beta's cross-tenant clone to fail"; exit 1; }
+
+info "Usage and accuracy: local cost tools, and paired raw vs rtk answers on fixed questions"
+USAGE_DIR=${USAGE_REPORT_DIR:-$HERE/.cache/team-demo-usage}
+mkdir -p "$USAGE_DIR"
+uv run --quiet --script "$HERE/scripts/13-accuracy-eval.py" --repetitions "${ACCURACY_REPETITIONS:-1}" --output "$USAGE_DIR/accuracy-eval.json"
+if command -v codeburn >/dev/null; then
+  codeburn status > "$USAGE_DIR/codeburn-status.txt" 2>&1 || echo "codeburn status failed" >&2
+  codeburn models > "$USAGE_DIR/codeburn-models.txt" 2>&1 || echo "codeburn models failed" >&2
+fi
+if command -v ccusage >/dev/null; then
+  ccusage daily --json --offline > "$USAGE_DIR/ccusage-daily.json" 2>&1 || echo "ccusage daily failed" >&2
+fi
+echo "usage and accuracy reports: $USAGE_DIR"

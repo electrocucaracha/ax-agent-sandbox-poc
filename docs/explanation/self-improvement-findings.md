@@ -47,7 +47,7 @@ reproductions and integrations marked deferred are not claimed complete.
 
 [Open the rendered architecture SVG](diagrams/self-improvement-architecture.svg).
 
-<!-- mermaid-checked: no \n, no em-dash/en-dash, no {} in labels, subgraphs are id["label"], arrows are -->|"label"|, all subgraphs closed by end, ids unique -->
+<!-- mermaid-checked: no \n, no em-dash/en-dash, no {} in labels, subgraphs are id["label"], arrows use quoted labels, all subgraphs closed by end, ids unique -->
 
 ```mermaid
 flowchart TD
@@ -103,7 +103,7 @@ The design separates model-generated text from credential policy and evaluator c
 
 [Open the rendered admission-flow SVG](diagrams/self-improvement-admission.svg).
 
-<!-- mermaid-checked: no \n, no em-dash/en-dash, no {} in labels, subgraphs are id["label"], arrows are -->|"label"|, all subgraphs closed by end, ids unique -->
+<!-- mermaid-checked: no \n, no em-dash/en-dash, no {} in labels, subgraphs are id["label"], arrows use quoted labels, all subgraphs closed by end, ids unique -->
 
 ```mermaid
 flowchart LR

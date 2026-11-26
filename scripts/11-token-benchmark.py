@@ -1,10 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv --quiet run --script
 """Measure paired context-token usage in one AX sandbox, without exposing keys."""
+
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
 
 import argparse
 import base64
 import datetime
 import json
+import logging
 import os
 import re
 import shutil
@@ -15,6 +21,8 @@ import urllib.parse
 import urllib.request
 import uuid
 from pathlib import Path
+
+log = logging.getLogger("token-benchmark")
 
 
 def command(args, **kwargs):
@@ -216,8 +224,8 @@ def worker(repetitions):
     Path("/workspace/results.json").write_text(json.dumps(results, indent=2))
 
 
-def run(args):
-    """Create temporary benchmark resources and remove them after collection."""
+def load_llm_settings():
+    """Read the LLM endpoint, model, key, and headers from .env.opencode."""
     root = Path(__file__).resolve().parent.parent
     loaded = subprocess.run(
         [
@@ -273,6 +281,21 @@ def run(args):
         raise ValueError("Extra headers must be a JSON object of strings")
     if any(k.lower() in ("authorization", "x-api-key") for k in headers):
         raise ValueError("Use the API-key variable, not extra headers, for credentials")
+    return {
+        "env": env,
+        "url": url,
+        "endpoint": endpoint,
+        "model": model,
+        "key": key,
+        "headers": headers,
+    }
+
+
+def run(args):
+    """Create temporary benchmark resources and remove them after collection."""
+    llm = load_llm_settings()
+    env, url, endpoint = llm["env"], llm["url"], llm["endpoint"]
+    model, key, headers = llm["model"], llm["key"], llm["headers"]
     ax = shutil.which("ax") or str(Path.home() / ".ax/bin/ax")
     name = f"token-benchmark-{uuid.uuid4().hex[:12]}"
     headroom_status = "not requested"
@@ -427,13 +450,17 @@ def run(args):
                 )
                 args.output.write_text(output)
                 results = json.loads(output)
-                print(
-                    f"Saved {len(results['measurements'])} measurements to {args.output}"
+                log.info(
+                    "Saved %s measurements to %s",
+                    len(results["measurements"]),
+                    args.output,
                 )
-                print(
-                    f"Correct answers: {sum(m['correct'] for m in results['measurements'])}/{len(results['measurements'])}"
+                log.info(
+                    "Correct answers: %s/%s",
+                    sum(m["correct"] for m in results["measurements"]),
+                    len(results["measurements"]),
                 )
-                print(f"Headroom: {results['headroom']['status']}")
+                log.info("Headroom: %s", results["headroom"]["status"])
                 if not all(m["correct"] for m in results["measurements"]):
                     raise RuntimeError(
                         "Answer validation failed; do not treat these results as successful savings"
@@ -467,6 +494,7 @@ if __name__ == "__main__":
     if arguments.worker:
         worker(arguments.repetitions)
     else:
+        logging.basicConfig(level=logging.INFO, format="%(message)s")
         if arguments.output is None:
             parser.error("--output is required")
         run(arguments)

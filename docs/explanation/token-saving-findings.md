@@ -119,15 +119,15 @@ flowchart LR
     end
     hr["Headroom proxy<br/>(in cluster)"]
     egress["atenet-egress"]
-    llm([LLM])
+    llm(["LLM"])
 
-    agent -->|runs commands| rtk
-    agent -->|MCP| eng
-    agent -->|graphify explain, path| gfy
+    agent -->|"runs commands"| rtk
+    agent -->|"MCP"| eng
+    agent -->|"graphify explain, path"| gfy
     agent --> egress
     egress -->|"via Headroom (optional)"| hr
     hr --> llm
-    egress -->|direct| llm
+    egress -->|"direct"| llm
 ```
 
 rtk, Engram and Graphify run inside the sandbox and shrink what the agent reads or re-discovers.
@@ -189,9 +189,39 @@ Accuracy did not clearly improve.
 The graphify run listed only 2 of the direct `Command` subclasses.
 Treat the graph as a navigation aid and verify answers.
 
+## Answer accuracy: 2026-11-26
+
+`scripts/13-accuracy-eval.py` asks four fixed questions over fixed inputs and scores each answer against ground truth.
+The baseline sends raw output, and the rtk variant sends output filtered by rtk.
+
+| Variant  | Accuracy (3 repeats) | Mean input tokens | Mean total tokens |
+| -------- | -------------------- | ----------------- | ----------------- |
+| baseline | 12/12                | 6,812             | 6,907             |
+| rtk      | 9/12                 | 3,266             | 3,298             |
+
+rtk cut input tokens by about 52%, but lost accuracy on one case.
+On `git log --stat` author counting, rtk's compressed output led the model to answer `3` instead of `40`.
+The pytest, error-code, and untracked-file cases matched the baseline.
+The sample is small, so treat this as a signal to verify, not a measured rate.
+
+The team demo run (`ACCURACY_REPETITIONS=1`) ended with rtk at 3/4 and baseline at 4/4 on the same cases, with the same `git log` miss.
+
+### Cost tools compared
+
+| Source                  | Sees benchmark and harness calls | Measures accuracy | Output                                     |
+| ----------------------- | -------------------------------- | ----------------- | ------------------------------------------ |
+| `11-token-benchmark.py` | Yes                              | No                | Paired token counts per workload           |
+| `13-accuracy-eval.py`   | Yes                              | Yes               | Pass rate per variant and case             |
+| `codeburn`              | No (local agent logs only)       | No                | Spend by model and task, Copilot providers |
+| `ccusage`               | No (local agent logs only)       | No                | Daily tokens and cost by model             |
+
+On this machine, `codeburn` reported about $10.5 spend for the month across 11,000 calls, and `ccusage` listed Sonnet, Opus, and Haiku by day.
+Neither tool shows the benchmark or harness calls, and `ccusage opencode` had no data.
+Use them for ongoing cost by model and task, not for comparing token-saving variants.
+
 ## What is still open
 
 - Repeat full-agent tests several times to measure variance.
 - Expand the paired pytest/JSON benchmarks to varied real workloads and richer accuracy checks.
 - Test Engram across suspend and resume, and across tasks.
-- Compare answer accuracy with a fixed set of questions.
+- Find out why rtk drops per-commit detail from `git log --stat`, and whether a rtk option keeps it.

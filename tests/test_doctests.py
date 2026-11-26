@@ -4,11 +4,12 @@ import doctest
 import importlib.util
 import io
 import json
-import os
 import runpy
 import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
+
+from click.testing import CliRunner
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -27,16 +28,17 @@ class ScriptEntryPointTests(unittest.TestCase):
             "GIT_PASS": "demo-pass",
         }
         with (
-            patch.dict(os.environ, environment),
-            patch("sys.argv", ["issues.py", "list", "alpha/app"]),
-            patch("sys.stdout", new_callable=io.StringIO) as output,
+            patch("ssl.create_default_context"),
             patch(
                 "urllib.request.urlopen",
                 return_value=io.BytesIO(json.dumps(response).encode()),
             ) as urlopen,
         ):
-            module["main"]()
-            self.assertEqual(output.getvalue(), "2|developer\n4|quality\n")
+            result = CliRunner(env=environment).invoke(
+                module["cli"], ["list", "alpha/app"]
+            )
+            self.assertEqual(result.exit_code, 0, result.output)
+            self.assertEqual(result.output, "2|developer\n4|quality\n")
         request = urlopen.call_args.args[0]
         self.assertEqual(
             request.full_url,

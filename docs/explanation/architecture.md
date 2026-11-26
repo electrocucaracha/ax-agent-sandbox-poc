@@ -6,7 +6,7 @@ This page explains how the pieces fit together and why the design looks the way 
 
 ```mermaid
 flowchart LR
-    user([You: ax CLI])
+    user(["You: ax CLI"])
     subgraph kind["kind cluster"]
         ax["AX server<br/>Task and Gateway objects"]
         reg[("Local registry<br/>registry:2")]
@@ -19,15 +19,15 @@ flowchart LR
         end
         egress["atenet-egress (Envoy)<br/>host allowlist<br/>replaceHeaders"]
     end
-    llm([LLM endpoint])
+    llm(["LLM endpoint"])
 
-    user -->|apply Task, Gateway| ax
-    ax -->|schedules| worker
-    reg -.->|image pull by digest| worker
+    user -->|"apply Task, Gateway"| ax
+    ax -->|"schedules"| worker
+    reg -.->|"image pull by digest"| worker
     agent --- ws
-    agent -->|HTTPS| egress
-    secret -.->|real key| egress
-    egress -->|HTTPS, real key| llm
+    agent -->|"HTTPS"| egress
+    secret -.->|"real key"| egress
+    egress -->|"HTTPS, real key"| llm
 ```
 
 The dotted lines are control-plane or one-time flows.

@@ -8,12 +8,12 @@ You use a mock LLM, so you need no real key.
 
 ```mermaid
 flowchart LR
-    A[1. Preflight] --> B[2. Install ax,<br/>start cluster]
-    B --> C[3. Deploy mock LLM<br/>and git server]
-    C --> D[4. Build<br/>agent image]
-    D --> E[5. Run team demo]
-    E --> F[6. Read results]
-    F --> G[7. Teardown]
+    A["1. Preflight"] --> B["2. Install ax,<br/>start cluster"]
+    B --> C["3. Deploy mock LLM<br/>and git server"]
+    C --> D["4. Build<br/>agent image"]
+    D --> E["5. Run team demo"]
+    E --> F["6. Read results"]
+    F --> G["7. Teardown"]
 ```
 
 ## Before you begin

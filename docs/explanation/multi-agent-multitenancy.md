@@ -34,11 +34,11 @@ flowchart TB
         other["Other headless CLI agents"]
     end
 
-    t -->|scheduled onto| pool
+    t -->|"scheduled onto"| pool
     pool --> gv
     gv --> ck
-    gv -->|all traffic| eg
-    g -->|configures| eg
+    gv -->|"all traffic"| eg
+    g -->|"configures"| eg
     gv --- oc
     gv --- other
 ```

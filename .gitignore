@@ -28,3 +28,6 @@ Thumbs.db
 # Logs and temporary files
 *.log
 *.tmp
+
+# Team demo usage and accuracy reports
+.cache/
